@@ -10,9 +10,9 @@ public:
     ~object();
 
     /// \brief sets position
-    void setPosition(Vec3 p_pos){m_position=p_pos};
+    void setPosition(Vec3 p_pos){m_position=p_pos;};
     /// \brief sets rotation
-    void setRotation(Vec3 p_rot){m_rotation =p_rot};
+    void setRotation(Vec3 p_rot){m_rotation =p_rot;};
     /// \brief gets position
     Vec3 getPosition(){return m_position;};
     /// \brief gets rotation
