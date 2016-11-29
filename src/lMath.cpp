@@ -23,7 +23,6 @@ namespace lMath
     // Normalizing Function
     const Vec3 normalize(Vec3 v)
     {
-
         float m = magnitude(v);
         return m!=0 ? Vec3(v/m) : Vec3(0,0,0);
 
@@ -50,6 +49,7 @@ namespace lMath
         float m = magnitude(v);
         return m!=0 ? Vec2(v/m) : Vec2(0,0);
     }
+
     void createTangents(Vec3 normal, Vec3 &tangent)
     {
         Vec3 up = Vec3(0.0f, 1.0f, 0.0f);

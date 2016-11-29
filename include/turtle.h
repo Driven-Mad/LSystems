@@ -1,6 +1,12 @@
-#ifndef TURTLE_H_
-#define TURTLE_H_ // TURTLE_H_
-#include"vec3.h"
+#ifndef TURTLE_H
+#define TURTLE_H // TURTLE_H
+//------------------------------------------------------------------
+/// \file    turtle.h
+/// \author  Lloyd Phillips
+/// \brief   This is the turtle class to manipulate a "turtle" to create geometric shapes.
+//------------------------------------------------------------------
+
+#include"lMath.h"
 
 class Turtle
 {

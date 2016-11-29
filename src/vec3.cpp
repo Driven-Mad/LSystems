@@ -1,8 +1,6 @@
 #include "vec3.h"
 #include <math.h>
 //Vector2 Constructors, takes 0,2,3 arg
-
-
 //== opertion for Vec3
 const bool Vec3::operator ==(const Vec3& v)
 {

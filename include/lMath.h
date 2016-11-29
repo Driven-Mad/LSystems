@@ -1,7 +1,7 @@
 #ifndef LMATH_H
 #define LMATH_H
 //------------------------------------------------------------------
-/// \file    Utilities.h
+/// \file    lMaths.h
 /// \author  Lloyd Phillips
 /// \brief   This is the utilities namespace
 //------------------------------------------------------------------
@@ -14,6 +14,7 @@
 ///Namespace util has multiple random functions to use.
 namespace lMath
 {
+
     /// \brief creates tangents, taking in a normal, and applying the tangent directly the the specified container.
     void createTangents(Vec3 normal, Vec3 &tangent);
 
@@ -48,5 +49,7 @@ namespace lMath
     const float magnitude(Vec3 v);
     /// \brief Normalize product calculations
     const Vec3 normalize(Vec3 v);
+
+
 }
 #endif ///!LMATH_H
