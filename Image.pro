@@ -14,23 +14,43 @@ CONFIG+=c++11
 # Input
 SOURCES += src/main.cpp \
            src/Image.cpp \
+    src/lSystem.cpp \
     src/turtle.cpp \
     src/lObject.cpp \
     src/lParser.cpp \
-    src/lSystem.cpp \
-    src/object.cpp \
-    src/vec3.cpp \
-    src/vec2.cpp \
-    src/lMath.cpp
+    src/object.cpp
 HEADERS+= include/Image.h \
+    include/lSystem.h \
     include/turtle.h \
     include/lObject.h \
     include/lParser.h \
-    include/lSystem.h \
-    include/object.h \
-    include/vec3.h \
-    include/vec2.h \
-    include/lMath.h
+    include/object.h
+
+# note each command you add needs a ; as it will be run as a single line
+# first check if we are shadow building or not easiest way is to check out against current
+#!equals(PWD, $${OUT_PWD}){
+#	copydata.commands = echo "creating destination dirs" ;
+#	# now make a dir
+#	copydata.commands += mkdir -p $$OUT_PWD/shaders ;
+#	copydata.commands += echo "copying files" ;
+#	# then copy the files
+#	copydata.commands += $(COPY_DIR) $$PWD/shaders/* $$OUT_PWD/shaders/ ;
+#	# now make sure the first target is built before copy
+#	first.depends = $(first) copydata
+#	export(first.depends)
+#	export(copydata.commands)
+#	# now add it as an extra target
+#	QMAKE_EXTRA_TARGETS += first copydata
+#}
+NGLPATH=$$(NGLDIR)
+isEmpty(NGLPATH){ # note brace must be here
+        message("including $HOME/NGL")
+        include($(HOME)/NGL/UseNGL.pri)
+}
+else{ # note brace must be here
+        message("Using custom NGL location")
+        include($(NGLDIR)/UseNGL.pri)
+}
 macx:QMAKE_CXXFLAGS+=-DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16 -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16 -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/local/include/ImageMagick-6
 macx:LIBS+= -L/usr/local/lib -lMagick++-6.Q16 -lMagickWand-6.Q16 -lMagickCore-6.Q16
 OBJECTS_DIR=obj

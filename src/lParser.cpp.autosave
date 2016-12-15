@@ -266,12 +266,22 @@ bool lParser::loadObj(char * filepath, object &obj)
     return success;
 }
 
-bool lParser::loadLObj(char * filepath, lObject lObj)
+bool lParser::loadLObj(char * _lsytemstring_filepath, char* _variables_rules_filepath, lObject lObj)
 {
     bool success = false;
 
     std::vector<std::string> temp_rules;
-    std::string LSystem;
+    std::string temp_LSystem_string;
+    
+    std::string line;
+    std::ifstream myFile(_lsytemstring_filepath);
+
+    //Succesful Files REad
+    bool success = false;
+    if(myObjectFile.is_open()){
+        printf("File has been opened \n");
+    }
+    
 
 
     return success;

@@ -13,7 +13,7 @@ Image::Image(size_t _width, size_t _height, size_t _depth)
     m_height = _height;
     m_data.reset(new Colour [m_width*m_height]);
     // m_data = std::move(t_data);
-    clearScreen(Colour(0,0,0));
+    clearScreen(Colour(0.5,0.5,0.5));
 
 }
 

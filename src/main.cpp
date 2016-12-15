@@ -2,8 +2,16 @@
 #include <cstdlib>
 #include <Magick++.h>
 #include <iostream>
+#include "lParser.h"
 int main()
 {
+  object *obj = new object();
+  lParser *pars = new lParser();
+
+  bool success = pars->loadObj("cube.obj",*obj);
+
+  obj->printVerticies();
+
   //Image *img = new Image(720,480,24);
   //img->clearScreen(Colour(0,255,0));
   //img->setPixel(10,10,Colour(255,0,0));

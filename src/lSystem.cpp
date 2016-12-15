@@ -1,4 +1,5 @@
 #include"lSystem.h"
+
 lSystem::lSystem()
 {
 
@@ -9,7 +10,7 @@ lSystem::~lSystem()
 
 }
 
-lSystem::stringInterpertator()
+void lSystem::stringInterpertator()
 {
    // interperate axiom of user rules etc.
 }
