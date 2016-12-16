@@ -5,6 +5,8 @@
 #include <iostream>
 #include "lObject.h"
 #include <unordered_map>
+#include <map>
+#include <functional>
 
 enum class LAlphabet
  {
@@ -20,9 +22,10 @@ enum class LAlphabet
      RollCCW,
      TurnAround,
      StartBranch,
-     EndBranch,
-     Random
+     EndBranch
  };
+
+
 
 class lSystem
 {
@@ -31,6 +34,9 @@ public:
     ~lSystem();
 
     static std::unordered_map<char , LAlphabet> AlphabetsStrings;
+    static std::map<LAlphabet , std::function<void(Turtle&)>> AlphabetFunctions;
+
+
 
     void stringInterpertator();
     void setLSystem(std::string p_system){m_string = p_system;};
@@ -61,6 +67,7 @@ private:
     std::string m_string;
     std::string m_axiom;
     std::vector<std::string>m_rules;
+
 
 };
 
