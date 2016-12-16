@@ -26,6 +26,7 @@ HEADERS+= include/Image.h \
     include/lParser.h \
     include/object.h
 
+OTHER_FILES = $$PWD/*.txt
 # note each command you add needs a ; as it will be run as a single line
 # first check if we are shadow building or not easiest way is to check out against current
 #!equals(PWD, $${OUT_PWD}){

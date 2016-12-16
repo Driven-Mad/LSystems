@@ -458,9 +458,9 @@ compiler_clean:
 
 obj/main.o: src/main.cpp include/Image.h \
 		include/lParser.h \
-		include/lObject.h \
-		include/object.h \
-		/home/i7230020/NGL/include/ngl/Vec2.h \
+		include/lSystem.h \
+		include/turtle.h \
+		/home/i7230020/NGL/include/ngl/Vec3.h \
 		/home/i7230020/NGL/include/ngl/Types.h \
 		/home/i7230020/NGL/include/ngl/glew.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL/QGLContext \
@@ -573,7 +573,9 @@ obj/main.o: src/main.cpp include/Image.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/i7230020/NGL/include/ngl/Vec3.h
+		include/lObject.h \
+		include/object.h \
+		/home/i7230020/NGL/include/ngl/Vec2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/Image.o: src/Image.cpp include/Image.h
@@ -817,9 +819,9 @@ obj/lObject.o: src/lObject.cpp include/lObject.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/lObject.o src/lObject.cpp
 
 obj/lParser.o: src/lParser.cpp include/lParser.h \
-		include/lObject.h \
-		include/object.h \
-		/home/i7230020/NGL/include/ngl/Vec2.h \
+		include/lSystem.h \
+		include/turtle.h \
+		/home/i7230020/NGL/include/ngl/Vec3.h \
 		/home/i7230020/NGL/include/ngl/Types.h \
 		/home/i7230020/NGL/include/ngl/glew.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL/QGLContext \
@@ -932,7 +934,9 @@ obj/lParser.o: src/lParser.cpp include/lParser.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/qsurfaceformat.h \
-		/home/i7230020/NGL/include/ngl/Vec3.h
+		include/lObject.h \
+		include/object.h \
+		/home/i7230020/NGL/include/ngl/Vec2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/lParser.o src/lParser.cpp
 
 obj/object.o: src/object.cpp include/object.h \

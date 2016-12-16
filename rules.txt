@@ -1,0 +1,7 @@
+#Rules
+rule 1 F = F-F+F+FF-F-F+F
+#Variables
+angle 90
+length 1
+axiom F-F-F-F
+generation 3

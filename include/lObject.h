@@ -6,7 +6,9 @@ class lObject
 public:
     lObject();
     ~lObject();
+
 private:
+
 };
 
 #endif
