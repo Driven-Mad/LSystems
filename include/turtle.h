@@ -14,9 +14,14 @@ public:
 
     void moveForwardFullStep();
     void moveForwardHalfStep();
-    void rotate();
-    void pitch();
-    void roll();
+    void moveForwardFullStepUndrawn();
+    void moveForwardHalfStepUndrawn();
+    void rotateLeft();
+    void rotateRight();
+    void pitchUp();
+    void pitchDown();
+    void rollCW();
+    void rollCCW();
     void turnAround();
     void pushOnStack();
     void popOffStack();

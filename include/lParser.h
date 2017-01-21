@@ -7,11 +7,6 @@
 #include <fstream>
 #include <sstream>
 
-#include <boost/tokenizer.hpp>
-#include <boost/spirit/include/qi.hpp>
-
-namespace qi = boost::spirit::qi;
-namespace spt = boost::spirit;
 
 class lParser
 {
@@ -20,19 +15,32 @@ public:
     ~lParser();
 
 
-    typedef boost::tokenizer<boost::char_separator<char> > tokenizer;
-    bool loadLSystem(const std::string &_lsytem_string_filepath, const std::string &_variables_rules_filepath, lSystem &lObj);
-    bool writeObj(const std::string & filepath, object lObj);
     bool loadObj(const std::string &filepath, object &obj);
-    bool writeLObj(const std::string & filepath, lObject lObj);
+    bool writeObj(const std::string & filepath, object lObj);
 
-    void parseLSystem(tokenizer::iterator &_firstWord);
-    void parseAngle(tokenizer::iterator &_firstWord);
-    void parseAxiom(tokenizer::iterator &_firstWord);
-    void parseGeneration(tokenizer::iterator &_firstWord);
+    //Write default files in both cases.
+    bool writeLObj(lSystem &lObj);
+
+    //Use default files
+    bool writeLObjRulesOnly(lSystem &lObj);
+    //Overloaded to write to your own files
+    bool writeLObjRulesOnly(const std::string & _variables_rules_filepath, lSystem &lObj);
+
+    //Use default files
+    bool writeLObjSystemOnly(lSystem &lObj);
+    //Overloaded to write to your own files
+    bool writeLObjSystemOnly(const std::string & _lsytem_string_filepath, lSystem &lObj);
+
+
+    //Use default files (if not there, they will be created with default L-system
+    bool loadLSystem(lSystem &lObj);
+    //Overloaded to use your own
+    bool loadLSystem(const std::string &_lsytem_string_filepath, const std::string &_variables_rules_filepath, lSystem &lObj);
+
 
 
 private:
+
 };
 
 #endif
