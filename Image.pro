@@ -69,4 +69,8 @@ else{ # note brace must be here
         include($(NGLDIR)/UseNGL.pri)
 }
 
+DISTFILES += \
+    Shaders/fragmentShader.txt \
+    Shaders/vertexShader.txt
+
 

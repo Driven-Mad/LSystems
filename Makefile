@@ -66,7 +66,9 @@ OBJECTS       = obj/main.o \
 		obj/NGLScene.o \
 		obj/NGLSceneMouseControls.o \
 		obj/Turtle.o
-DIST          = .qmake.stash \
+DIST          = Shaders/fragmentShader.txt \
+		Shaders/vertexShader.txt \
+		.qmake.stash \
 		Image.pro include/Image.h \
 		include/lSystem.h \
 		include/lObject.h \

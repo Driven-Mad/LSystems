@@ -99,6 +99,7 @@ public:
     void printAll();
 
     Turtle *m_turtle;
+    std::vector<ngl::Vec4> m_verts;
 private:
 
     int m_generation;
@@ -106,7 +107,7 @@ private:
     float m_globalLength;
     std::string m_string;
     std::string m_axiom;
-    std::vector<ngl::Vec4> m_verts;
+
     std::vector<std::string> m_rules;
     std::vector<std::string> LHS_rules;
     std::vector<std::string> RHS_rules;

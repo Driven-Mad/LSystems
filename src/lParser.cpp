@@ -617,7 +617,7 @@ void lParser::loadShader(GLuint &program, GLuint &shader, char *shaderFilepath, 
 }
 
 bool lParser::CheckShaderCompiled( GLuint shader ){
-    GLuint compiled;
+    GLint compiled;
     glGetShaderiv( shader, GL_COMPILE_STATUS, &compiled );
     if ( !compiled ){
         GLsizei len;
@@ -635,16 +635,19 @@ bool lParser::CheckShaderCompiled( GLuint shader ){
 
 GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFilePath)
 {
-    GLuint program;
+    GLuint program = glCreateProgram();
     GLuint vertShader, fragShader;
     loadShader(program,vertShader,vertexShaderFilePath,GL_VERTEX_SHADER);
     loadShader(program,fragShader,fragmentShaderFilePath,GL_FRAGMENT_SHADER);
-    GLuint linked;
+    GLint linked;
     glGetProgramiv(program, GL_LINK_STATUS, &linked );
     if ( linked )
     {
-        return program;
         printf("Program successfully linked \n ");
+        glDeleteShader(vertShader);
+        glDeleteShader(fragShader);
+        return program;
+
     }
     else{
         GLsizei len;
@@ -653,7 +656,7 @@ GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFile
         glGetProgramInfoLog( program, len, &len, log );
         std::cerr << "ERROR: Shader linking failed: " << log << std::endl;
         delete [] log;
-        return;
+        return 0;
     }
 
 
@@ -661,17 +664,21 @@ GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFile
 
 GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFilePath, char* geoShaderFilePath)
 {
-    GLuint program;
+    GLuint program = glCreateProgram();
     GLuint vertShader, fragShader, geoShader;
     loadShader(program,vertShader,vertexShaderFilePath,GL_VERTEX_SHADER);
     loadShader(program,fragShader,fragmentShaderFilePath,GL_FRAGMENT_SHADER);
     loadShader(program,geoShader,geoShaderFilePath,GL_GEOMETRY_SHADER);
-    GLuint linked;
+    GLint linked;
     glGetProgramiv(program, GL_LINK_STATUS, &linked );
     if ( linked )
     {
-        return program;
         printf("Program successfully linked \n ");
+        glDeleteShader(vertShader);
+        glDeleteShader(fragShader);
+        glDeleteShader(geoShader);
+        return program;
+
     }
     else{
         GLsizei len;
@@ -680,7 +687,7 @@ GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFile
         glGetProgramInfoLog( program, len, &len, log );
         std::cerr << "ERROR: Shader linking failed: " << log << std::endl;
         delete [] log;
-        return;
+        return 0;
     }
 }
 

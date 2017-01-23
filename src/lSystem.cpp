@@ -53,14 +53,16 @@ void lSystem::stringInterpertator()
 {
    // interperate axiom of user rules etc.
 
-    m_turtle->m_transformationMatrix.reset();
-    for(unsigned int i = 0; i < m_string.size(); i++)
-    {
-      AlphabetFunctions[AlphabetsStrings[m_string[i]]](*m_turtle);
-      m_turtle->update();
-      m_verts.push_back(m_turtle->getPosition());
-      std::cout<<"X: "<<m_verts[i].m_x <<" Y: " << m_verts[i].m_y <<" Z: " << m_verts[i].m_z<<"\n";
-    }
+   m_turtle->m_transformationMatrix.reset();
+   for(unsigned int i = 0; i < m_string.size(); i++)
+   {
+
+     AlphabetFunctions[AlphabetsStrings[m_string[i]]](*m_turtle);
+     m_turtle->update();
+     m_verts.push_back(m_turtle->getPosition());
+     std::cout<<"X: "<<m_verts[i].m_x <<" Y: " << m_verts[i].m_y <<" Z: " << m_verts[i].m_z<<"\n";
+   }
+
 
 }
 

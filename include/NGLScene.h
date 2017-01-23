@@ -75,12 +75,18 @@ private:
     /// @param _event the Qt Event structure
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
+
+    void createQuad();
     /// @brief windows parameters for mouse control etc.
     WinParams m_win;
     /// position for our model
     ngl::Vec3 m_modelPos;
     lParser *pars;
     lSystem *lsys;
+
+    GLuint myShader;
+
+    GLuint m_vaoID;
 
 };
 

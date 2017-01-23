@@ -1,6 +1,0 @@
-#Rules 
-#Variables 
-angle 0.000000
-length 0.000000
-axiom 
-generation 0
