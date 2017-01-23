@@ -3,30 +3,46 @@
 ######################################################################
 
 TARGET = Image
+
+OBJECTS_DIR=obj
+
+QT+=gui opengl core
+
+isEqual(QT_MAJOR_VERSION, 5) {
+        cache()
+        DEFINES +=QT5BUILD
+}
+
+MOC_DIR=moc
+
 CONFIG -= app_bundle
-DEPENDPATH += .
-INCLUDEPATH += ./include
 
-
-linux:QMAKE_CXXFLAGS+=$$system(Magick++-config --cppflags )
-linux:LIBS+=$$system(Magick++-config --ldflags --libs )
 CONFIG+=c++11
 # Input
 SOURCES += src/main.cpp \
            src/Image.cpp \
     src/lSystem.cpp \
-    src/turtle.cpp \
     src/lObject.cpp \
     src/lParser.cpp \
-    src/object.cpp
+    src/object.cpp \
+    src/NGLScene.cpp \
+    src/NGLSceneMouseControls.cpp \
+    src/Turtle.cpp
 HEADERS+= include/Image.h \
     include/lSystem.h \
-    include/turtle.h \
     include/lObject.h \
     include/lParser.h \
-    include/object.h
+    include/object.h \
+    include/NGLScene.h \
+    include/WindowParams.h \
+    include/Turtle.h
+
+INCLUDEPATH += ./include
+DESTDIR=./
 
 OTHER_FILES = $$PWD/*.txt
+
+CONFIG += console
 # note each command you add needs a ; as it will be run as a single line
 # first check if we are shadow building or not easiest way is to check out against current
 #!equals(PWD, $${OUT_PWD}){
@@ -52,6 +68,5 @@ else{ # note brace must be here
         message("Using custom NGL location")
         include($(NGLDIR)/UseNGL.pri)
 }
-macx:QMAKE_CXXFLAGS+=-DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16 -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16 -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16 -I/usr/local/include/ImageMagick-6
-macx:LIBS+= -L/usr/local/lib -lMagick++-6.Q16 -lMagickWand-6.Q16 -lMagickCore-6.Q16
-OBJECTS_DIR=obj
+
+

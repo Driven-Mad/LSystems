@@ -1,8 +1,6 @@
 #Rules 
-rule 0 F=F-F+
-rule 1 +=-+
 #Variables 
-angle 90.000000
-length 1.000000
-axiom F-F-F-F
+angle 0.000000
+length 0.000000
+axiom 
 generation 0

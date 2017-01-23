@@ -1,6 +1,6 @@
 #ifndef LSYSTEM_H
 #define LSYSTEM_H
-#include "turtle.h"
+#include "Turtle.h"
 #include <vector>
 #include <iostream>
 #include "lObject.h"
@@ -49,15 +49,15 @@ inline LRules operator++(LRules &r)
     }
     return r;
 }
-
-
-struct stringRuleSolver
+inline LRules operator--(LRules &r)
 {
-    LRules r;
-    std::string c;
-};
-
-
+    r = (LRules)((int)(r) - 1);
+    if(r == LRules::Rule1)
+    {
+        r = LRules::Character;
+    }
+    return r;
+}
 
 class lSystem
 {
@@ -73,6 +73,7 @@ public:
     void stringInterpertator();
 
     void increaseGeneration();
+    void decreaseGeneration();
 
 
     void setLSystem(std::string p_system){m_string = p_system;};
@@ -105,6 +106,7 @@ private:
     float m_globalLength;
     std::string m_string;
     std::string m_axiom;
+    std::vector<ngl::Vec4> m_verts;
     std::vector<std::string> m_rules;
     std::vector<std::string> LHS_rules;
     std::vector<std::string> RHS_rules;

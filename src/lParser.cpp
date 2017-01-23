@@ -358,7 +358,7 @@ bool lParser::writeLObjRulesOnly(lSystem &lObj)
 
 bool lParser::writeLObjSystemOnly(lSystem &lObj)
 {
-    std::string _lsytem_string_filepath = "lsystem.txt"; //default file name will be "lsystem.txt
+    std::string _lsytem_string_filepath = "LSystemFiles/lsystem.txt"; //default file name will be "lsystem.txt
 
     //Check if file already exists just so that we can inform the user if that it's newly created.
     std::ifstream iMyRulesFile(_lsytem_string_filepath);
@@ -499,8 +499,8 @@ bool lParser::loadLSystem(const std::string & _lsytem_string_filepath, const std
 bool lParser::loadLSystem(lSystem &lObj)
 {
     bool success = false;
-    const std::string  _lsytem_string_filepath = "lsystem.txt" ;
-    const std::string  _variables_rules_filepath = "rules.txt";
+    const std::string  _lsytem_string_filepath = "LSystemFiles/lsystem.txt" ;
+    const std::string  _variables_rules_filepath = "LSystemFiles/rules.txt";
     std::string line;
     std::ifstream myLsystemFile(_lsytem_string_filepath);
     std::ifstream myVariablesRulesFile(_variables_rules_filepath);
@@ -584,5 +584,104 @@ bool lParser::loadLSystem(lSystem &lObj)
 
 }
 
+void lParser::loadfile(char *filepath, std::string &storage)
+{
+    std::ifstream t(filepath);
+    std::stringstream buffer;
+    if(t.is_open())
+    {
+        buffer << t.rdbuf();
+        storage = buffer.str();
+    }
+    t.close();
+}
+
+void lParser::loadShader(GLuint &program, GLuint &shader, char *shaderFilepath, GLenum shaderType)
+{
+    std::string shaderStorage;
+    loadfile(shaderFilepath,shaderStorage);
+    shader = glCreateShader(shaderType);
+    const GLchar* str = shaderStorage.c_str();
+    glShaderSource(shader,1,&str,NULL);
+    glCompileShader(shader);
+    if( CheckShaderCompiled( shader ) ){
+        printf("\n %s successfully compiled", shaderFilepath);
+    }
+    else{
+        printf("\n %s failed to compiled", shaderFilepath);
+        return;
+    }
+    glAttachShader(program,shader);
+    glLinkProgram(program);
+
+}
+
+bool lParser::CheckShaderCompiled( GLuint shader ){
+    GLuint compiled;
+    glGetShaderiv( shader, GL_COMPILE_STATUS, &compiled );
+    if ( !compiled ){
+        GLsizei len;
+        glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &len );
+        // OpenGL will store an error message as a string that we can retrieve and print
+        GLchar* log = new GLchar[len+1];
+        glGetShaderInfoLog( shader, len, &len, log );
+        std::cerr << "ERROR: Shader compilation failed: " << log << std::endl;
+        delete [] log;
+        return false;
+    }
+    return true;
+}
+
+
+GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFilePath)
+{
+    GLuint program;
+    GLuint vertShader, fragShader;
+    loadShader(program,vertShader,vertexShaderFilePath,GL_VERTEX_SHADER);
+    loadShader(program,fragShader,fragmentShaderFilePath,GL_FRAGMENT_SHADER);
+    GLuint linked;
+    glGetProgramiv(program, GL_LINK_STATUS, &linked );
+    if ( linked )
+    {
+        return program;
+        printf("Program successfully linked \n ");
+    }
+    else{
+        GLsizei len;
+        glGetProgramiv( program, GL_INFO_LOG_LENGTH, &len );
+        GLchar* log = new GLchar[len+1];
+        glGetProgramInfoLog( program, len, &len, log );
+        std::cerr << "ERROR: Shader linking failed: " << log << std::endl;
+        delete [] log;
+        return;
+    }
+
+
+}
+
+GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFilePath, char* geoShaderFilePath)
+{
+    GLuint program;
+    GLuint vertShader, fragShader, geoShader;
+    loadShader(program,vertShader,vertexShaderFilePath,GL_VERTEX_SHADER);
+    loadShader(program,fragShader,fragmentShaderFilePath,GL_FRAGMENT_SHADER);
+    loadShader(program,geoShader,geoShaderFilePath,GL_GEOMETRY_SHADER);
+    GLuint linked;
+    glGetProgramiv(program, GL_LINK_STATUS, &linked );
+    if ( linked )
+    {
+        return program;
+        printf("Program successfully linked \n ");
+    }
+    else{
+        GLsizei len;
+        glGetProgramiv( program, GL_INFO_LOG_LENGTH, &len );
+        GLchar* log = new GLchar[len+1];
+        glGetProgramInfoLog( program, len, &len, log );
+        std::cerr << "ERROR: Shader linking failed: " << log << std::endl;
+        delete [] log;
+        return;
+    }
+}
 
 

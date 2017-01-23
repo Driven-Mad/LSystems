@@ -26,8 +26,8 @@ std::map<LAlphabet , std::function<void(Turtle&)>> lSystem::AlphabetFunctions =
     {LAlphabet::FullStepUndrawn,    &Turtle::moveForwardFullStepUndrawn},
     {LAlphabet::HalfStep,           &Turtle::moveForwardHalfStep},
     {LAlphabet::HalfStepUndrawn,    &Turtle::moveForwardHalfStepUndrawn},
-    {LAlphabet::RotateRight,        &Turtle::rotateRight},
-    {LAlphabet::RotateLeft,         &Turtle::rotateLeft},
+    {LAlphabet::RotateRight,        &Turtle::yawRight},
+    {LAlphabet::RotateLeft,         &Turtle::yawLeft},
     {LAlphabet::PitchUp,            &Turtle::pitchUp},
     {LAlphabet::PitchDown,          &Turtle::pitchDown},
     {LAlphabet::RollCW,             &Turtle::rollCW},
@@ -53,9 +53,13 @@ void lSystem::stringInterpertator()
 {
    // interperate axiom of user rules etc.
 
+    m_turtle->m_transformationMatrix.reset();
     for(unsigned int i = 0; i < m_string.size(); i++)
     {
       AlphabetFunctions[AlphabetsStrings[m_string[i]]](*m_turtle);
+      m_turtle->update();
+      m_verts.push_back(m_turtle->getPosition());
+      std::cout<<"X: "<<m_verts[i].m_x <<" Y: " << m_verts[i].m_y <<" Z: " << m_verts[i].m_z<<"\n";
     }
 
 }
@@ -65,6 +69,7 @@ void lSystem::stringInterpertator()
 void lSystem::printLSystem()
 {
     printf("Lsystem is as follows: \n%s\n", m_string.c_str());
+
 }
 
 void lSystem::printVariables()
@@ -119,21 +124,43 @@ void lSystem::splitRules()
 
 }
 
+void lSystem::decreaseGeneration()
+{
+    if(m_generation != 0)
+    {
+        LRules rule = LRules(LHS_rules.size());
+
+        splitRules();
+        for(size_t i = 0; i<RHS_rules.size();i++)
+        {
+            //Starting point is string[0]
+            size_t startSearchingFrom = 0;
+            //make startingpoint = searchString[first character of found subString]
+            while((startSearchingFrom = m_string.find(RHS_rules[i],startSearchingFrom)) != std::string::npos )
+            {
+                //increase by one to the end.
+                m_string.replace(startSearchingFrom,(RHS_rules[i].length()+1),LHS_rules[i]);
+                //startSearchingFrom += RHS_rules[i].length();
+                startSearchingFrom++;
+            }
+            --rule;
+        }
+        m_generation --;
+    }
+
+}
 
 void lSystem::increaseGeneration()
 {
+    std::vector<LRules> m_stringSolved;
     if(m_generation == 0)
     {
         m_string = m_axiom;
     }
-
-    std::vector<stringRuleSolver> m_stringSolved;
     for(size_t x= 0; x<m_string.length(); x++)
     {
-        stringRuleSolver SRS;
-        SRS.c = m_string[x];
-        SRS.r = LRules::Character;
-        m_stringSolved.push_back(SRS);
+        LRules c = LRules::Character;
+        m_stringSolved.push_back(c);
     }
 
     LRules rule = LRules::Rule1;
@@ -145,8 +172,9 @@ void lSystem::increaseGeneration()
         //make startingpoint = searchString[first character of found subString]
         while((startSearchingFrom = m_string.find(LHS_rules[i],startSearchingFrom)) != std::string::npos )
         {
+            //increase by one to the end.
             startSearchingFrom ++;
-            m_stringSolved[startSearchingFrom-1].r = rule;
+            m_stringSolved[startSearchingFrom-1] = rule;
         }
         ++rule;
     }
@@ -155,44 +183,46 @@ void lSystem::increaseGeneration()
     for(size_t f = 0; f<m_stringSolved.size(); f++)
     {
        // printf("Enum is: %i \n", int(m_stringSolved[f].r)); //Debug Only
-        switch(m_stringSolved[f].r)
+        switch(m_stringSolved[f])
         {
         case LRules::Rule1:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule1)];
+            newString+= RHS_rules[int(LRules::Rule1)];
             break;
         case LRules::Rule2:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule2)];
+            newString+= RHS_rules[int(LRules::Rule2)];
             break;
         case LRules::Rule3:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule3)];
+            newString+= RHS_rules[int(LRules::Rule3)];
             break;
         case LRules::Rule4:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule4)];
+            newString+= RHS_rules[int(LRules::Rule4)];
             break;
         case LRules::Rule5:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule5)];
+            newString+= RHS_rules[int(LRules::Rule5)];
             break;
         case LRules::Rule6:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule6)];
+            newString+= RHS_rules[int(LRules::Rule6)];
             break;
         case LRules::Rule7:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule7)];
+            newString+= RHS_rules[int(LRules::Rule7)];
             break;
         case LRules::Rule8:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule7)];
+            newString+= RHS_rules[int(LRules::Rule8)];
             break;
         case LRules::Rule9:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule7)];
+            newString+= RHS_rules[int(LRules::Rule9)];
             break;
         case LRules::Rule10:
-            m_stringSolved[f].c = RHS_rules[int(LRules::Rule7)];
+            newString+= RHS_rules[int(LRules::Rule10)];
+            break;
+        case LRules::Character:
+            newString+= m_string[f];
             break;
         default:
             break;
         }
-        newString+= m_stringSolved[f].c;
     }
-    //printf("Final String is: %s \n", newString.c_str());//Debug Only
+    //printf("Final String is: %s \n", newString.c_str()); //Debug Only
     m_string = newString;
     m_generation ++;
 

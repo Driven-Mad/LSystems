@@ -3,6 +3,8 @@
 #include"lSystem.h"
 #include "object.h"
 
+#include <GL/gl.h>
+
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -37,6 +39,19 @@ public:
     //Overloaded to use your own
     bool loadLSystem(const std::string &_lsytem_string_filepath, const std::string &_variables_rules_filepath, lSystem &lObj);
 
+    void loadfile(char *filepath, std::string &storage);
+    void loadShader(GLuint &program, GLuint &shader, char *shaderFilepath, GLenum shaderType);
+
+    GLuint loadProgram(char* vertexShaderFilePath, char* fragmentShaderFilePath);
+
+    GLuint loadProgram(char* vertexShaderFilePath, char* fragmentShaderFilePath, char* geoShaderFilePath);
+
+protected:
+
+
+    bool CheckShaderCompiled(GLuint shader);
+    //void loadVertexShader();
+    //glCreateShader(GL_VERTEX_SHADER);
 
 
 private:
