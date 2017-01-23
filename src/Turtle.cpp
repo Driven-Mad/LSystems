@@ -5,6 +5,7 @@ Turtle::Turtle()
     //Default constructor
     m_position.zero();
     m_transformationMatrix.setPosition(0,0,0);
+    m_transformationMatrix.addRotation(0,0,90);
 
 }
 
@@ -20,6 +21,7 @@ void Turtle::moveForwardFullStep()
     std::string boolian;
     drawing ? boolian = "True" : boolian = "False";
     printf("Moving forward full step and drawn is: %s \n", boolian.c_str());
+//    m_transformationMatrix.reset();
     m_transformationMatrix.addPosition(m_transformationMatrix.getMatrix().getForwardVector() * m_standardUnit);
 }
 void Turtle::moveForwardFullStepUndrawn()
@@ -121,9 +123,17 @@ void Turtle::popOffStack()
      printf("Pop off \n");
 }
 
+#include <ngl/NGLStream.h>
+#include <iomanip>
+
 void Turtle::update()
 {
-    m_position = m_transformationMatrix.getPosition();
+    std::cout<<std::fixed<<std::endl;
+    std::cout<< m_position.m_x<<" , "<< m_position.m_y<<" , "<< m_position.m_z <<std::endl;
+    m_position = ngl::Vec3(m_transformationMatrix.getPosition().m_x,m_transformationMatrix.getPosition().m_z,m_transformationMatrix.getPosition().m_y);
+    std::cout<< m_position.m_x<<" , "<< m_position.m_y<<" , "<< m_position.m_z <<std::endl;
+
+
    // m_position.x = m_transformationMatrix.m_03;
    // m_position.y = m_transformationMatrix.m_13;
    // m_position.z = m_transformationMatrix.m_23;

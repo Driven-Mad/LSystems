@@ -605,15 +605,14 @@ void lParser::loadShader(GLuint &program, GLuint &shader, char *shaderFilepath, 
     glShaderSource(shader,1,&str,NULL);
     glCompileShader(shader);
     if( CheckShaderCompiled( shader ) ){
-        printf("\n %s successfully compiled", shaderFilepath);
+        printf("%s successfully compiled \n", shaderFilepath);
     }
     else{
-        printf("\n %s failed to compiled", shaderFilepath);
+        printf("%s failed to compiled \n", shaderFilepath);
         return;
     }
     glAttachShader(program,shader);
     glLinkProgram(program);
-
 }
 
 bool lParser::CheckShaderCompiled( GLuint shader ){

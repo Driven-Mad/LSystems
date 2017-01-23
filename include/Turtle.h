@@ -29,21 +29,21 @@ public:
     void popOffStack();
 
     //getters and setters
-    void setPosition(ngl::Vec4 p_pos){m_position = p_pos;};
-    void setRotation(ngl::Vec4 p_rot){m_rotation = p_rot;};
-    void setStoredPosition(ngl::Vec3 p_pos){m_storedStackPosition = p_pos;};
-    void setStoredRotation(ngl::Vec3 p_rot){m_storedStackRotation = p_rot;};
-    void setStandardUnit(float p_sUnit){m_standardUnit = p_sUnit;};
-    void setStandardAngle(float p_angle){m_standardAngle = p_angle;};
+    void setPosition(ngl::Vec4 p_pos){m_position = p_pos;}
+    void setRotation(ngl::Vec4 p_rot){m_rotation = p_rot;}
+    void setStoredPosition(ngl::Vec3 p_pos){m_storedStackPosition = p_pos;}
+    void setStoredRotation(ngl::Vec3 p_rot){m_storedStackRotation = p_rot;}
+    void setStandardUnit(float p_sUnit){m_standardUnit = p_sUnit;}
+    void setStandardAngle(float p_angle){m_standardAngle = p_angle;}
 
-    ngl::Vec4 getPosition(){return m_position;};
-    ngl::Vec4 getRotation(){return m_rotation;};
-    ngl::Vec3 getStoredPosition(){return m_storedStackPosition;};
-    ngl::Vec3 getStoredRotation(){return m_storedStackRotation;};
-    float getStandardUnit(){return m_standardUnit;};
-    float getAngle(){return m_standardAngle;};
+    const ngl::Vec4 &getPosition() const {return m_position;}
+    ngl::Vec4 getRotation(){return m_rotation;}
+    ngl::Vec3 getStoredPosition(){return m_storedStackPosition;}
+    ngl::Vec3 getStoredRotation(){return m_storedStackRotation;}
+    float getStandardUnit(){return m_standardUnit;}
+    float getAngle(){return m_standardAngle;}
 
-    void toggleDrawing(){drawing = !drawing;};
+    void toggleDrawing(){drawing = !drawing;}
 
     void update();
     ngl::Transformation m_transformationMatrix;
