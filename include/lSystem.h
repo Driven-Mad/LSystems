@@ -76,22 +76,22 @@ public:
     void decreaseGeneration();
 
 
-    void setLSystem(std::string p_system){m_string = p_system;};
-    void setLSystem(char* p_system){m_string = p_system;};
-    void setGlobalAngle(float p_angle){m_globalAngle = p_angle;};
-    void setGlobalLength(float p_length){m_globalLength = p_length;};
-    void setAxiom(std::string p_axiom){m_axiom = p_axiom;};
-    void setGeneration(int p_gen){m_generation = p_gen;};
+    void setLSystem(std::string p_system){m_string = p_system;}
+    void setLSystem(char* p_system){m_string = p_system;}
+    void setGlobalAngle(float p_angle){m_globalAngle = p_angle;}
+    void setGlobalLength(float p_length){m_globalLength = p_length;}
+    void setAxiom(std::string p_axiom){m_axiom = p_axiom;}
+    void setGeneration(int p_gen){m_generation = p_gen;}
 
-    std::string getLSystem(){return m_string;};
-    int getGeneration(){return m_generation;};
-    float getGlobalAngle(){return m_globalAngle;};
-    float getGlobalLength(){return m_globalLength;};
-    std::string getAxiom(){return m_axiom;};
+    std::string getLSystem(){return m_string;}
+    int getGeneration(){return m_generation;}
+    float getGlobalAngle(){return m_globalAngle;}
+    float getGlobalLength(){return m_globalLength;}
+    std::string getAxiom(){return m_axiom;}
 
 
-    void addRule(std::string p_rule){m_rules.push_back(p_rule);};
-    std::vector<std::string> getRules(){return m_rules;};
+    void addRule(std::string p_rule){m_rules.push_back(p_rule);}
+    std::vector<std::string> getRules(){return m_rules;}
 
     void printLSystem();
     void printVariables();
@@ -107,6 +107,7 @@ private:
     float m_globalLength;
     std::string m_string;
     std::string m_axiom;
+    lObject *m_generatedObject;
 
     std::vector<std::string> m_rules;
     std::vector<std::string> LHS_rules;

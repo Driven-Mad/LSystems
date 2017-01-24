@@ -1,0 +1,7 @@
+#Rules 
+rule 0 H=H+H--H+H
+#Variables 
+angle 60.000000
+length 0.100000
+axiom H--H--H
+generation 0

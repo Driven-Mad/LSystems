@@ -329,7 +329,7 @@ bool lParser::writeLObjRulesOnly(const std::string &_variables_rules_filepath, l
 
 bool lParser::writeLObjRulesOnly(lSystem &lObj)
 {
-    const std::string _variables_rules_filepath = "rules.txt";
+    const std::string _variables_rules_filepath = "LSystemFiles/rules.txt";
 
     std::ifstream iMyRulesFile(_variables_rules_filepath);
     if(!iMyRulesFile.is_open())

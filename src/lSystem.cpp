@@ -41,6 +41,7 @@ std::map<LAlphabet , std::function<void(Turtle&)>> lSystem::AlphabetFunctions =
 lSystem::lSystem()
 {
     m_turtle = new Turtle();
+    m_generatedObject = new lObject();
     m_generation = 0;
 }
 
@@ -52,16 +53,78 @@ lSystem::~lSystem()
 void lSystem::stringInterpertator()
 {
    // interperate axiom of user rules etc.
+    m_verts.clear();
+    m_generatedObject->clearAll();
+    m_turtle->m_transformationMatrix.reset();
+    int index = 0;
 
+
+    for(unsigned int i = 0; i < m_string.size(); i++)
+    {
+        if(m_string[i] == 'F' || m_string[i] == 'H' )
+        {
+            //Add the current position
+            m_generatedObject->addVert(m_turtle->getPosition());
+            // add that index
+            m_generatedObject->addIndicies(index);
+            //Increase the index
+            index++;
+
+        }
+        //Call appropriate function based on string
+        AlphabetFunctions[AlphabetsStrings[m_string[i]]](*m_turtle);
+        //update the turtle
+        m_turtle->update();
+
+        //IF the string variable we are reading in is a FULL DRAWN step
+        if(m_string[i] == 'F' || m_string[i] == 'H')
+        {
+            //Add the current position
+            m_generatedObject->addVert(m_turtle->getPosition());
+            // add that index
+            m_generatedObject->addIndicies(index);
+            //Increase the index
+            index++;
+
+        }
+    }
+
+    for(int x=0; x< m_generatedObject->iSize(); x++)
+    {
+        //printf("Indicies are as follows: %i \n", m_generatedObject->getIndicie(x));
+        int g = m_generatedObject->getIndicie(x);
+        m_verts.push_back(m_generatedObject->getVertex(g));
+        //printf("X: %f, Y: %f, Z: %f \n",m_verts[x].m_x,m_verts[x].m_y,m_verts[x].m_z);
+    }
+
+   /*
+    *    // interperate axiom of user rules etc.
+   m_verts.clear();
+   m_generatedObject->clearAll();
    m_turtle->m_transformationMatrix.reset();
+
    for(unsigned int i = 0; i < m_string.size(); i++)
    {
-
+     if(m_turtle->getDrawing())
+     {
+         m_generatedObject->addIndicies(i);
+     }
      AlphabetFunctions[AlphabetsStrings[m_string[i]]](*m_turtle);
      m_turtle->update();
-     m_verts.push_back(m_turtle->getPosition());
-//     std::cout<<"X: "<<m_verts[i].m_x <<" Y: " << m_verts[i].m_y <<" Z: " << m_verts[i].m_z<<"\n";
+     m_generatedObject->addVert(m_turtle->getPosition());
+     if(m_turtle->getDrawing())
+     {
+         m_generatedObject->addIndicies(i);
+     }
    }
+   for(int x=0; x< m_generatedObject->iSize(); x++)
+   {
+       printf("Indicies are as follows: %i \n", m_generatedObject->getIndicie(x));
+       m_verts.push_back(m_generatedObject->getVertex(m_generatedObject->getIndicie(x)));
+       printf("X: %f, Y: %f, Z: %f \n",m_verts[x].m_x,m_verts[x].m_y,m_verts[x].m_z);
+   }
+
+    */
 
 
 }
@@ -86,7 +149,7 @@ void lSystem::printRules()
 {
     for(size_t i = 0; i<m_rules.size(); i++)
     {
-        printf("Rule %i is as follows: \n%s\n",i, m_rules[i].c_str());
+        printf("Rule %i is as follows: \n%s\n",int(i), m_rules[i].c_str());
 
     }
 
@@ -128,37 +191,37 @@ void lSystem::splitRules()
 
 void lSystem::decreaseGeneration()
 {
-    if(m_generation != 0)
-    {
-        LRules rule = LRules(LHS_rules.size());
 
-        splitRules();
-        for(size_t i = 0; i<RHS_rules.size();i++)
-        {
-            //Starting point is string[0]
-            size_t startSearchingFrom = 0;
-            //make startingpoint = searchString[first character of found subString]
-            while((startSearchingFrom = m_string.find(RHS_rules[i],startSearchingFrom)) != std::string::npos )
-            {
-                //increase by one to the end.
-                m_string.replace(startSearchingFrom,(RHS_rules[i].length()+1),LHS_rules[i]);
-                //startSearchingFrom += RHS_rules[i].length();
-                startSearchingFrom++;
-            }
-            --rule;
-        }
-        m_generation --;
-    }
+   if(m_generation >= 0)
+   {
+       LRules rule = LRules(LHS_rules.size()-1);
+
+       splitRules();
+       for(size_t i = 0; i<RHS_rules.size();i++)
+       {
+           //Starting point is string[0]
+           size_t startSearchingFrom = 0;
+           //make startingpoint = searchString[first character of found subString]
+           while((startSearchingFrom = m_string.find(RHS_rules[int(rule)],startSearchingFrom)) != std::string::npos )
+           {
+               //increase by one to the end.
+               m_string.replace(startSearchingFrom,(RHS_rules[int(rule)].length()),LHS_rules[int(rule)]);
+               //startSearchingFrom += RHS_rules[i].length();
+               startSearchingFrom++;
+           }
+           --rule;
+       }
+       m_generation --;
+       stringInterpertator();
+   }
+
 
 }
 
 void lSystem::increaseGeneration()
 {
     std::vector<LRules> m_stringSolved;
-    if(m_generation == 0)
-    {
-        m_string = m_axiom;
-    }
+
     for(size_t x= 0; x<m_string.length(); x++)
     {
         LRules c = LRules::Character;
@@ -227,5 +290,6 @@ void lSystem::increaseGeneration()
     //printf("Final String is: %s \n", newString.c_str()); //Debug Only
     m_string = newString;
     m_generation ++;
+    stringInterpertator();
 
 }

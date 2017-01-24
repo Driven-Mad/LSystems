@@ -12,7 +12,7 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT5BUILD -DQT5BUILD -DNGL_DEBUG -DQT_QML_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
+DEFINES       = -DQT5BUILD -D_DEBUG -DQT5BUILD -DNGL_DEBUG -DQT_QML_DEBUG -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -msse -msse2 -msse3 -march=native -march=native -g -std=gnu++11 -Wall -W -Wno-unused-parameter -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -Iinclude -I/home/i7230020/NGL/include -I/opt/Qt5.7.0/5.7/gcc_64/include -I/opt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL -I/opt/Qt5.7.0/5.7/gcc_64/include/QtWidgets -I/opt/Qt5.7.0/5.7/gcc_64/include/QtGui -I/opt/Qt5.7.0/5.7/gcc_64/include/QtCore -Imoc -I/opt/Qt5.7.0/5.7/gcc_64/mkspecs/linux-g++
@@ -68,6 +68,8 @@ OBJECTS       = obj/main.o \
 		obj/Turtle.o
 DIST          = Shaders/fragmentShader.txt \
 		Shaders/vertexShader.txt \
+		LSystemFiles/lsystem.txt \
+		LSystemFiles/rules.txt \
 		.qmake.stash \
 		Image.pro include/Image.h \
 		include/lSystem.h \
@@ -621,7 +623,13 @@ obj/main.o: src/main.cpp /opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QGuiApplication \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtCore/QScopedPointer \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/qopenglversionfunctions.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QImage \
-		include/WindowParams.h
+		include/WindowParams.h \
+		/home/i7230020/NGL/include/ngl/Camera.h \
+		/home/i7230020/NGL/include/ngl/RibExport.h \
+		/home/i7230020/NGL/include/ngl/Plane.h \
+		/home/i7230020/NGL/include/ngl/AABB.h \
+		/home/i7230020/NGL/include/ngl/BBox.h \
+		/home/i7230020/NGL/include/ngl/AbstractVAO.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/Image.o: src/Image.cpp include/Image.h
@@ -751,7 +759,7 @@ obj/lSystem.o: src/lSystem.cpp include/lSystem.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/lSystem.o src/lSystem.cpp
 
 obj/lObject.o: src/lObject.cpp include/lObject.h \
-		/home/i7230020/NGL/include/ngl/Vec2.h \
+		/home/i7230020/NGL/include/ngl/Vec4.h \
 		/home/i7230020/NGL/include/ngl/Types.h \
 		/home/i7230020/NGL/include/ngl/glew.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL/QGLContext \
@@ -864,6 +872,7 @@ obj/lObject.o: src/lObject.cpp include/lObject.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtOpenGL/qtopenglglobal.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QSurfaceFormat \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/qsurfaceformat.h \
+		/home/i7230020/NGL/include/ngl/Vec2.h \
 		/home/i7230020/NGL/include/ngl/Vec3.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/lObject.o src/lObject.cpp
 
@@ -1258,10 +1267,15 @@ obj/NGLScene.o: src/NGLScene.cpp /opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QMouseEve
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/qopenglversionfunctions.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QImage \
 		include/WindowParams.h \
+		/home/i7230020/NGL/include/ngl/Camera.h \
+		/home/i7230020/NGL/include/ngl/RibExport.h \
+		/home/i7230020/NGL/include/ngl/Plane.h \
+		/home/i7230020/NGL/include/ngl/AABB.h \
+		/home/i7230020/NGL/include/ngl/BBox.h \
+		/home/i7230020/NGL/include/ngl/AbstractVAO.h \
 		/home/i7230020/NGL/include/ngl/NGLInit.h \
 		/home/i7230020/NGL/include/ngl/Singleton.h \
-		/home/i7230020/NGL/include/ngl/VAOPrimitives.h \
-		/home/i7230020/NGL/include/ngl/AbstractVAO.h
+		/home/i7230020/NGL/include/ngl/VAOPrimitives.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLScene.o src/NGLScene.cpp
 
 obj/NGLSceneMouseControls.o: src/NGLSceneMouseControls.cpp include/NGLScene.h \
@@ -1407,6 +1421,12 @@ obj/NGLSceneMouseControls.o: src/NGLSceneMouseControls.cpp include/NGLScene.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/qopenglversionfunctions.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QImage \
 		include/WindowParams.h \
+		/home/i7230020/NGL/include/ngl/Camera.h \
+		/home/i7230020/NGL/include/ngl/RibExport.h \
+		/home/i7230020/NGL/include/ngl/Plane.h \
+		/home/i7230020/NGL/include/ngl/AABB.h \
+		/home/i7230020/NGL/include/ngl/BBox.h \
+		/home/i7230020/NGL/include/ngl/AbstractVAO.h \
 		/opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QMouseEvent
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/NGLSceneMouseControls.o src/NGLSceneMouseControls.cpp
 
@@ -1528,7 +1548,8 @@ obj/Turtle.o: src/Turtle.cpp include/Turtle.h \
 		/home/i7230020/NGL/include/ngl/NGLassert.h \
 		/home/i7230020/NGL/include/ngl/Vec4.h \
 		/home/i7230020/NGL/include/ngl/Vec2.h \
-		/home/i7230020/NGL/include/ngl/Vec3.h
+		/home/i7230020/NGL/include/ngl/Vec3.h \
+		/home/i7230020/NGL/include/ngl/NGLStream.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Turtle.o src/Turtle.cpp
 
 ####### Install

@@ -17,6 +17,8 @@ MOC_DIR=moc
 
 CONFIG -= app_bundle
 
+CONFIG(debug, release|debug):DEFINES += _DEBUG
+
 CONFIG+=c++11
 # Input
 SOURCES += src/main.cpp \
@@ -71,6 +73,8 @@ else{ # note brace must be here
 
 DISTFILES += \
     Shaders/fragmentShader.txt \
-    Shaders/vertexShader.txt
+    Shaders/vertexShader.txt \
+    LSystemFiles/lsystem.txt \
+    LSystemFiles/rules.txt
 
 

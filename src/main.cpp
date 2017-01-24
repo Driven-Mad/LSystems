@@ -1,30 +1,3 @@
-//#include "Image.h"
-//#include <cstdlib>
-//#include <Magick++.h>
-//#include <iostream>
-//int main()
-//{
-// // object *obj = new object();
-//  //lParser *pars = new lParser();
-//  //lSystem *lsys = new lSystem();
-//  //bool success;
-//  //bool success = pars->loadObj("cube.obj",*obj);
-//
-//  //success = pars->loadLSystem(*lsys);
-//
-//  //lsys->stringInterpertator();
-// // obj->printVerticies();
-//
-//  //lsys->increaseGeneration();
-//  //lsys->printAll();
-// // lsys->stringInterpertator();
-//  //lsys->increaseGeneration();
-// // lsys->printLSystem();
-//  //lsys->decreaseGeneration();
-//  //pars->writeLObj(*lsys);
-//  //return EXIT_SUCCESS;
-//}
-
 #include <QtGui/QGuiApplication>
 #include <iostream>
 #include <NGLScene.h>

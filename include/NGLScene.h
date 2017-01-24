@@ -77,7 +77,6 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
-    void createQuad();
     /// @brief windows parameters for mouse control etc.
     WinParams m_win;
     /// position for our model
@@ -89,7 +88,10 @@ private:
 
     GLuint m_vaoID;
     GLuint vboID;
+    ngl::Mat4 m_mouseGlobalTX;
     ngl::Camera m_cam;
+
+    GLuint MLocation, MVPLocation, colorLocation  ;
 
 
 };
