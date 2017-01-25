@@ -55,7 +55,7 @@ void lSystem::stringInterpertator()
    // interperate axiom of user rules etc.
     m_verts.clear();
     m_generatedObject->clearAll();
-    m_turtle->m_transformationMatrix.reset();
+    m_turtle->resetTransformation();
     int index = 0;
 
 
@@ -97,34 +97,7 @@ void lSystem::stringInterpertator()
         //printf("X: %f, Y: %f, Z: %f \n",m_verts[x].m_x,m_verts[x].m_y,m_verts[x].m_z);
     }
 
-   /*
-    *    // interperate axiom of user rules etc.
-   m_verts.clear();
-   m_generatedObject->clearAll();
-   m_turtle->m_transformationMatrix.reset();
 
-   for(unsigned int i = 0; i < m_string.size(); i++)
-   {
-     if(m_turtle->getDrawing())
-     {
-         m_generatedObject->addIndicies(i);
-     }
-     AlphabetFunctions[AlphabetsStrings[m_string[i]]](*m_turtle);
-     m_turtle->update();
-     m_generatedObject->addVert(m_turtle->getPosition());
-     if(m_turtle->getDrawing())
-     {
-         m_generatedObject->addIndicies(i);
-     }
-   }
-   for(int x=0; x< m_generatedObject->iSize(); x++)
-   {
-       printf("Indicies are as follows: %i \n", m_generatedObject->getIndicie(x));
-       m_verts.push_back(m_generatedObject->getVertex(m_generatedObject->getIndicie(x)));
-       printf("X: %f, Y: %f, Z: %f \n",m_verts[x].m_x,m_verts[x].m_y,m_verts[x].m_z);
-   }
-
-    */
 
 
 }
@@ -139,8 +112,8 @@ void lSystem::printLSystem()
 
 void lSystem::printVariables()
 {
-    printf("Angle is as follows: \n%f\n",m_globalAngle );
-    printf("Length is as follows: \n%f\n",m_globalLength );
+    printf("Angle is as follows: \n%f\n",m_turtle->getAngle() );
+    printf("Length is as follows: \n%f\n",m_turtle->getStandardUnit() );
     printf("Axiom is as follows: \n%s\n", m_axiom.c_str());
 
 }
@@ -194,7 +167,7 @@ void lSystem::decreaseGeneration()
 
    if(m_generation >= 0)
    {
-       LRules rule = LRules(LHS_rules.size()-1);
+       lRules rule = lRules(LHS_rules.size()-1);
 
        splitRules();
        for(size_t i = 0; i<RHS_rules.size();i++)
@@ -220,15 +193,15 @@ void lSystem::decreaseGeneration()
 
 void lSystem::increaseGeneration()
 {
-    std::vector<LRules> m_stringSolved;
+    std::vector<lRules> m_stringSolved;
 
     for(size_t x= 0; x<m_string.length(); x++)
     {
-        LRules c = LRules::Character;
+        lRules c = lRules::Character;
         m_stringSolved.push_back(c);
     }
 
-    LRules rule = LRules::Rule1;
+    lRules rule = lRules::Rule1;
     splitRules();
     for(size_t i = 0; i<LHS_rules.size();i++)
     {
@@ -250,37 +223,37 @@ void lSystem::increaseGeneration()
        // printf("Enum is: %i \n", int(m_stringSolved[f].r)); //Debug Only
         switch(m_stringSolved[f])
         {
-        case LRules::Rule1:
-            newString+= RHS_rules[int(LRules::Rule1)];
+        case lRules::Rule1:
+            newString+= RHS_rules[int(lRules::Rule1)];
             break;
-        case LRules::Rule2:
-            newString+= RHS_rules[int(LRules::Rule2)];
+        case lRules::Rule2:
+            newString+= RHS_rules[int(lRules::Rule2)];
             break;
-        case LRules::Rule3:
-            newString+= RHS_rules[int(LRules::Rule3)];
+        case lRules::Rule3:
+            newString+= RHS_rules[int(lRules::Rule3)];
             break;
-        case LRules::Rule4:
-            newString+= RHS_rules[int(LRules::Rule4)];
+        case lRules::Rule4:
+            newString+= RHS_rules[int(lRules::Rule4)];
             break;
-        case LRules::Rule5:
-            newString+= RHS_rules[int(LRules::Rule5)];
+        case lRules::Rule5:
+            newString+= RHS_rules[int(lRules::Rule5)];
             break;
-        case LRules::Rule6:
-            newString+= RHS_rules[int(LRules::Rule6)];
+        case lRules::Rule6:
+            newString+= RHS_rules[int(lRules::Rule6)];
             break;
-        case LRules::Rule7:
-            newString+= RHS_rules[int(LRules::Rule7)];
+        case lRules::Rule7:
+            newString+= RHS_rules[int(lRules::Rule7)];
             break;
-        case LRules::Rule8:
-            newString+= RHS_rules[int(LRules::Rule8)];
+        case lRules::Rule8:
+            newString+= RHS_rules[int(lRules::Rule8)];
             break;
-        case LRules::Rule9:
-            newString+= RHS_rules[int(LRules::Rule9)];
+        case lRules::Rule9:
+            newString+= RHS_rules[int(lRules::Rule9)];
             break;
-        case LRules::Rule10:
-            newString+= RHS_rules[int(LRules::Rule10)];
+        case lRules::Rule10:
+            newString+= RHS_rules[int(lRules::Rule10)];
             break;
-        case LRules::Character:
+        case lRules::Character:
             newString+= m_string[f];
             break;
         default:

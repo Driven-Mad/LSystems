@@ -1,4 +1,4 @@
-#include "Image.h"
+#include "image.h"
 
 
 Image::Image()
@@ -12,9 +12,7 @@ Image::Image(size_t _width, size_t _height, size_t _depth)
     m_width = _width;
     m_height = _height;
     m_data.reset(new Colour [m_width*m_height]);
-    // m_data = std::move(t_data);
     clearScreen(Colour(0.5,0.5,0.5));
-
 }
 
 Image::~Image()
@@ -22,18 +20,18 @@ Image::~Image()
 
 }
 
-void Image::setPixel(size_t _x, size_t _y, Colour c)
+void Image::setPixel(size_t _x, size_t _y, Colour _c)
 {
-    m_data[_x + (_y * m_width)] = c;
+    m_data[_x + (_y * m_width)] = _c;
 }
 
-void Image::clearScreen(Colour c)
+void Image::clearScreen(Colour _c)
 {
-    for(auto w = 0; w < m_width; w++)
+    for(size_t w = 0; w < m_width; w++)
     {
-        for (auto h = 0; h < m_height; h++)
+        for (size_t h = 0; h < m_height; h++)
         {
-           setPixel(w,h,c);
+           setPixel(w,h,_c);
         }
     }
 }

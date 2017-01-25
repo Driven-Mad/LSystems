@@ -298,28 +298,35 @@ bool lParser::writeLObjRulesOnly(const std::string &_variables_rules_filepath, l
     bool success = false;
     std::string line;
 
+    //check if we can open the file.
     std::ifstream iMyRulesFile(_variables_rules_filepath);
     if(iMyRulesFile.is_open())
     {
+        //if it is opened then open it as a writable file
         std::ofstream myRulesFile(_variables_rules_filepath);
-        //If if stream can open, file exists, write to it.
+        //If ifstream can open, file exists, write to it.
         printf("%s File has been opened \n",_variables_rules_filepath.c_str());
+        //create a temporary array for a rules.
         std::vector<std::string> rules = lObj.getRules();
+        //write rules to file
         myRulesFile <<"#Rules \n";
         for(size_t i = 0; i < rules.size(); i++)
         {
             myRulesFile <<"rule " << std::to_string(i) << " " << rules[i] << "\n";
         }
+        //write variables to file
         myRulesFile <<"#Variables \n";
-        myRulesFile <<"angle " << std::to_string(lObj.getGlobalAngle()) << "\n";
-        myRulesFile <<"length " << std::to_string(lObj.getGlobalLength()) << "\n";
+        myRulesFile <<"angle " << std::to_string(lObj.m_turtle->getAngle()) << "\n";
+        myRulesFile <<"length " << std::to_string(lObj.m_turtle->getStandardUnit()) << "\n";
         myRulesFile <<"axiom " << lObj.getAxiom() << "\n";
         myRulesFile <<"generation " << std::to_string(lObj.getGeneration()) << "\n";
+        //close up both files.
         myRulesFile.close();
         iMyRulesFile.close();
         success = true;
     }else
     {
+        //Else the file doesn't exist, close it up and return false
         printf("%s does not exist \n",_variables_rules_filepath.c_str());
         iMyRulesFile.close();
         success = false;
@@ -332,14 +339,17 @@ bool lParser::writeLObjRulesOnly(lSystem &lObj)
     const std::string _variables_rules_filepath = "LSystemFiles/rules.txt";
 
     std::ifstream iMyRulesFile(_variables_rules_filepath);
+    //check if file already exists.
     if(!iMyRulesFile.is_open())
     {
         printf("Default file does not exist, creating rules.txt \n",_variables_rules_filepath.c_str());
     }
     iMyRulesFile.close();
+    //if either way. Write to the default file.
     std::ofstream myRulesFile(_variables_rules_filepath);
-    //If if stream can open, file exists, write to it.
+    //If ifstream can open, file exists, write to it.
     printf("%s File has been opened \n",_variables_rules_filepath.c_str());
+    //write our rules and variables to the file
     std::vector<std::string> rules = lObj.getRules();
     myRulesFile <<"#Rules \n";
     for(size_t i = 0; i < rules.size(); i++)
@@ -347,10 +357,11 @@ bool lParser::writeLObjRulesOnly(lSystem &lObj)
         myRulesFile <<"rule " << std::to_string(i) << " " << rules[i] << "\n";
     }
     myRulesFile <<"#Variables \n";
-    myRulesFile <<"angle " << std::to_string(lObj.getGlobalAngle()) << "\n";
-    myRulesFile <<"length " << std::to_string(lObj.getGlobalLength()) << "\n";
+    myRulesFile <<"angle " << std::to_string(lObj.m_turtle->getAngle()) << "\n";
+    myRulesFile <<"length " << std::to_string(lObj.m_turtle->getStandardUnit()) << "\n";
     myRulesFile <<"axiom " << lObj.getAxiom() << "\n";
     myRulesFile <<"generation " << std::to_string(lObj.getGeneration()) << "\n";
+    //close up, return successful.
     myRulesFile.close();
 
     return true;
@@ -382,6 +393,7 @@ bool lParser::writeLObjSystemOnly(const std::string &_lsytem_string_filepath, lS
     bool success = false;
     std::string line;
     std::ifstream iMyRulesFile(_lsytem_string_filepath);
+    //check if file exists as it's user defined
     if(iMyRulesFile.is_open())
     {
         std::ofstream myRulesFile(_lsytem_string_filepath);
@@ -389,12 +401,14 @@ bool lParser::writeLObjSystemOnly(const std::string &_lsytem_string_filepath, lS
         printf("%s File has been opened \n",_lsytem_string_filepath.c_str());
         myRulesFile << lObj.getLSystem();
 
+        //close up files
         myRulesFile.close();
         iMyRulesFile.close();
         success = true;
     }else
     {
         printf("%s does not exist \n",_lsytem_string_filepath.c_str());
+        //close up file, and return false.
         iMyRulesFile.close();
         success = false;
     }
@@ -403,9 +417,12 @@ bool lParser::writeLObjSystemOnly(const std::string &_lsytem_string_filepath, lS
 
 bool lParser::writeLObj(lSystem &lObj)
 {
-    writeLObjSystemOnly(lObj);
-    writeLObjRulesOnly(lObj);
-
+    bool success = writeLObjSystemOnly(lObj);
+    if(success)
+    {
+        success =writeLObjRulesOnly(lObj);
+    }
+    return success;
 }
 
 bool lParser::loadLSystem(const std::string & _lsytem_string_filepath, const std::string &_variables_rules_filepath, lSystem &lObj)
@@ -449,6 +466,7 @@ bool lParser::loadLSystem(const std::string & _lsytem_string_filepath, const std
                     split_string.push_back(buffer); //Adds the seperate words into our storage for our  line split
 
                 }
+                //chuck all our rules and variables into our lsystems turtle.
                 if(split_string[0] == "rule")
                 {
                     std::string r;
@@ -460,12 +478,10 @@ bool lParser::loadLSystem(const std::string & _lsytem_string_filepath, const std
                 }
                 if(split_string[0]== "angle")
                 {
-                    lObj.setGlobalAngle(std::stof(split_string[1]));
                     lObj.m_turtle->setStandardAngle(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "length")
                 {
-                    lObj.setGlobalLength(std::stof(split_string[1]) );
                     lObj.m_turtle->setStandardUnit(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "axiom")
@@ -485,18 +501,17 @@ bool lParser::loadLSystem(const std::string & _lsytem_string_filepath, const std
     }
     else
     {
+        //failed to read in the file,
         printf("Couldn't open %s File \n",_variables_rules_filepath.c_str());
         myVariablesRulesFile.close();
         success = false;
     }
-
-
     return success;
 
 }
 
 
-bool lParser::loadLSystem(lSystem &lObj)
+bool lParser::loadLSystem(lSystem &lSys)
 {
     bool success = false;
     const std::string  _lsytem_string_filepath = "LSystemFiles/lsystem.txt" ;
@@ -511,7 +526,7 @@ bool lParser::loadLSystem(lSystem &lObj)
         printf("%s File has been opened \n",_lsytem_string_filepath.c_str());
         while(std::getline(myLsystemFile, line))//get everyline of the lsystem
         {
-            lObj.setLSystem(lObj.getLSystem().append(line)); //add every line to our system
+            lSys.setLSystem(lSys.getLSystem().append(line)); //add every line to our system
             //need to check if everything is apart of our alphabet.
         }
         myLsystemFile.close();
@@ -519,7 +534,7 @@ bool lParser::loadLSystem(lSystem &lObj)
     }else
     {
         myLsystemFile.close();
-        success = writeLObjSystemOnly(lObj);
+        success = writeLObjSystemOnly(lSys);
     }
 
     if(myVariablesRulesFile.is_open())
@@ -538,6 +553,7 @@ bool lParser::loadLSystem(lSystem &lObj)
                     split_string.push_back(buffer); //Adds the seperate words into our storage for our  line split
 
                 }
+                //chuck all our rules and variables into our lsystems turtle.
                 if(split_string[0] == "rule")
                 {
                     std::string r;
@@ -545,25 +561,23 @@ bool lParser::loadLSystem(lSystem &lObj)
                     {
                         r.append(split_string[x]);
                     }
-                    lObj.addRule(r);
+                    lSys.addRule(r);
                 }
                 if(split_string[0]== "angle")
                 {
-                    lObj.setGlobalAngle(std::stof(split_string[1]));
-                    lObj.m_turtle->setStandardAngle(std::stof(split_string[1]));
+                    lSys.m_turtle->setStandardAngle(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "length")
                 {
-                    lObj.setGlobalLength(std::stof(split_string[1]) );
-                    lObj.m_turtle->setStandardUnit(std::stof(split_string[1]));
+                    lSys.m_turtle->setStandardUnit(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "axiom")
                 {
-                    lObj.setAxiom(split_string[1]);
+                    lSys.setAxiom(split_string[1]);
                 }
                 if(split_string[0]== "generation")
                 {
-                    lObj.setGeneration(std::stoi(split_string[1]));
+                    lSys.setGeneration(std::stoi(split_string[1]));
                 }
                 success = true;
             }
@@ -576,7 +590,7 @@ bool lParser::loadLSystem(lSystem &lObj)
     {
 
         myVariablesRulesFile.close();
-        success = writeLObjRulesOnly(lObj);
+        success = writeLObjRulesOnly(lSys);
     }
 
 
@@ -584,41 +598,52 @@ bool lParser::loadLSystem(lSystem &lObj)
 
 }
 
-void lParser::loadfile(char *filepath, std::string &storage)
+void lParser::loadfile(const std::string &filepath, std::string &storage)
 {
+    //read in file
     std::ifstream t(filepath);
     std::stringstream buffer;
     if(t.is_open())
     {
         buffer << t.rdbuf();
         storage = buffer.str();
+    }else
+    {
+        printf("%s doe not exist please check naming convention", filepath.c_str());
     }
     t.close();
 }
 
-void lParser::loadShader(GLuint &program, GLuint &shader, char *shaderFilepath, GLenum shaderType)
+void lParser::loadShader(GLuint &program, GLuint &shader, const std::string &shaderFilepath, GLenum shaderType)
 {
+    //store our shader into a string
     std::string shaderStorage;
     loadfile(shaderFilepath,shaderStorage);
+    //create our shader
     shader = glCreateShader(shaderType);
     const GLchar* str = shaderStorage.c_str();
     glShaderSource(shader,1,&str,NULL);
+    //compile our shader and do some checks to if it compiled successfuly.
     glCompileShader(shader);
     if( CheckShaderCompiled( shader ) ){
-        printf("%s successfully compiled \n", shaderFilepath);
+        printf("%s successfully compiled \n", shaderFilepath.c_str());
     }
     else{
-        printf("%s failed to compiled \n", shaderFilepath);
+        printf("%s failed to compiled \n", shaderFilepath.c_str());
         return;
     }
+    //attach shader to our program
     glAttachShader(program,shader);
+    //link program up.
     glLinkProgram(program);
 }
 
-bool lParser::CheckShaderCompiled( GLuint shader ){
+bool lParser::CheckShaderCompiled( GLuint shader )
+{
     GLint compiled;
     glGetShaderiv( shader, GL_COMPILE_STATUS, &compiled );
-    if ( !compiled ){
+    if ( !compiled )
+    {
         GLsizei len;
         glGetShaderiv( shader, GL_INFO_LOG_LENGTH, &len );
         // OpenGL will store an error message as a string that we can retrieve and print
@@ -632,23 +657,29 @@ bool lParser::CheckShaderCompiled( GLuint shader ){
 }
 
 
-GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFilePath)
+GLuint lParser::loadProgram(const std::string &vertexShaderFilePath, const std::string &fragmentShaderFilePath)
 {
+    //create our program
     GLuint program = glCreateProgram();
     GLuint vertShader, fragShader;
+    //load our vertex shader and fragment shader.
     loadShader(program,vertShader,vertexShaderFilePath,GL_VERTEX_SHADER);
     loadShader(program,fragShader,fragmentShaderFilePath,GL_FRAGMENT_SHADER);
     GLint linked;
+    //check that they have successfully linked.
     glGetProgramiv(program, GL_LINK_STATUS, &linked );
     if ( linked )
     {
         printf("Program successfully linked \n ");
+        //delete as no need for shaders anymore as they are attached to our progran.
         glDeleteShader(vertShader);
         glDeleteShader(fragShader);
         return program;
 
     }
-    else{
+    else
+    {
+        //chuck out errors
         GLsizei len;
         glGetProgramiv( program, GL_INFO_LOG_LENGTH, &len );
         GLchar* log = new GLchar[len+1];
@@ -661,25 +692,30 @@ GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFile
 
 }
 
-GLuint lParser::loadProgram(char* vertexShaderFilePath, char* fragmentShaderFilePath, char* geoShaderFilePath)
+GLuint lParser::loadProgram(const std::string & vertexShaderFilePath, const std::string & fragmentShaderFilePath, const std::string & geoShaderFilePath)
 {
     GLuint program = glCreateProgram();
     GLuint vertShader, fragShader, geoShader;
+    //load our vertex,frag,geo shaders.
     loadShader(program,vertShader,vertexShaderFilePath,GL_VERTEX_SHADER);
     loadShader(program,fragShader,fragmentShaderFilePath,GL_FRAGMENT_SHADER);
     loadShader(program,geoShader,geoShaderFilePath,GL_GEOMETRY_SHADER);
+    //make sure they're all linked up.
     GLint linked;
     glGetProgramiv(program, GL_LINK_STATUS, &linked );
     if ( linked )
     {
         printf("Program successfully linked \n ");
+        //delete as no need for shaders anymore as they are attached to our progran.
         glDeleteShader(vertShader);
         glDeleteShader(fragShader);
         glDeleteShader(geoShader);
         return program;
 
     }
-    else{
+    else
+    {
+        //chuck out errors
         GLsizei len;
         glGetProgramiv( program, GL_INFO_LOG_LENGTH, &len );
         GLchar* log = new GLchar[len+1];

@@ -22,22 +22,23 @@ CONFIG(debug, release|debug):DEFINES += _DEBUG
 CONFIG+=c++11
 # Input
 SOURCES += src/main.cpp \
-           src/Image.cpp \
     src/lSystem.cpp \
     src/lObject.cpp \
     src/lParser.cpp \
     src/object.cpp \
     src/NGLScene.cpp \
     src/NGLSceneMouseControls.cpp \
-    src/Turtle.cpp
-HEADERS+= include/Image.h \
+    src/Turtle.cpp \
+    src/image.cpp
+HEADERS+= \
     include/lSystem.h \
     include/lObject.h \
     include/lParser.h \
     include/object.h \
     include/NGLScene.h \
     include/WindowParams.h \
-    include/Turtle.h
+    include/Turtle.h \
+    include/image.h
 
 INCLUDEPATH += ./include
 DESTDIR=./
