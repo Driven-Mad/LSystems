@@ -75,13 +75,13 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     void turnAround();
     //----------------------------------------------------------------------------------------------------------------------
-    /// @brief Push's on the stack.
+    /// @brief Starts a new branch
     //----------------------------------------------------------------------------------------------------------------------
-    void pushOnStack();
+    void startBranch();
     //----------------------------------------------------------------------------------------------------------------------
-    /// @brief Pops's off the stack.
+    /// @brief ends the branch
     //----------------------------------------------------------------------------------------------------------------------
-    void popOffStack();
+    void endBranch();
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Toggle the drawing flag on and off.
     //----------------------------------------------------------------------------------------------------------------------
@@ -112,11 +112,11 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Stores the current position of the turtle into a seperate variable
     //----------------------------------------------------------------------------------------------------------------------
-    void storePosition(){m_storedStackPosition = m_position;}
+    //void storePosition(){m_storedStackPosition = m_position;}
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Stores the current rotation of the turtle into a seperate variable
     //----------------------------------------------------------------------------------------------------------------------
-    void storeRotation(){m_storedStackRotation = m_rotation;}
+    //void storeRotation(){m_storedStackRotation = m_transformation.getRotation();}
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Sets the standard unit and half unit.
     /// @param p_sUnit - The standard unit you wish to set turtles standard unit
@@ -143,15 +143,13 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     const ngl::Vec4 &getRotation() const {return m_rotation;}
     //----------------------------------------------------------------------------------------------------------------------
-    /// @brief Gets the stored postion of this turtle.
-    /// @return Returns the current stored position (m_storedStackPosition) of the turtle. (Vec4)
+    /// @brief restores position before poping off.
     //----------------------------------------------------------------------------------------------------------------------
-    const ngl::Vec4 &getStoredPosition() const {return m_storedStackPosition;}
+    //void restorePosition() {m_transformation.setPosition(m_storedStackPosition); m_position = m_storedStackPosition;}
     //----------------------------------------------------------------------------------------------------------------------
-    /// @brief Gets the stored rotation of this turtle.
-    /// @return Returns the current stored rotation (m_storedStackPosition) of the turtle. (Vec4)
+    /// @brief restores rotation before poping off.
     //----------------------------------------------------------------------------------------------------------------------
-    const ngl::Vec4 &getStoredRotation()const {return m_storedStackRotation;}
+    //void restoreRotation() {m_transformation.setRotation( m_storedStackRotation);m_rotation = m_storedStackRotation;}
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Gets the standard unit of this turtle.
     /// @return Returns the current standard unit (m_standardUnit) of the turtle. (float)
@@ -171,9 +169,14 @@ public:
     /// @brief Gets the drawing flag of this turtle.
     /// @return Returns the drawing flag (draw) of the turtle. Drawing ? True : False (bool)
     //----------------------------------------------------------------------------------------------------------------------
-    const ngl::Transformation &getTransformation()const {return m_transformation;}
+    //const ngl::Transformation &getTransformation()const {return m_transformation;}
+
+    //void storeTrans(){storedTrans = m_transformation;}
+
+    //void restoreTrans(){m_transformation = storedTrans;}
 
 
+    bool popedTurtle = false;
 private:
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Turtle transformation;
@@ -211,6 +214,8 @@ private:
     /// @brief draw flag to see if the turtle is being drawn Drawing ? True : False
     //----------------------------------------------------------------------------------------------------------------------
     bool draw = false;
+
+    ngl::Transformation storedTrans;
 
 };
 

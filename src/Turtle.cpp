@@ -1,12 +1,15 @@
 #include "Turtle.h"
-
+#include <algorithm>
 Turtle::Turtle()
 {
     //Default constructor
     //Zero out everything.
     m_position.zero();
     m_transformation.setPosition(0,0,0);
+
 }
+
+
 
 Turtle::~Turtle()
 {
@@ -20,7 +23,11 @@ void Turtle::moveForwardFullStep()
 #endif
 
     draw = true;
-    m_transformation.addPosition(m_transformation.getMatrix().getForwardVector() * m_standardUnit);
+    m_transformation.addPosition(m_transformation.getMatrix().getUpVector() * m_standardUnit);
+
+    m_transformation.getMatrix().getUpVector();
+    printf("FORWARD VECTOR = X: %f, Y: %f, Z: %f\n",m_transformation.getMatrix().getForwardVector().m_x,m_transformation.getMatrix().getForwardVector().m_y,m_transformation.getMatrix().getForwardVector().m_z);
+
 }
 
 void Turtle::moveForwardFullStepUndrawn()
@@ -59,7 +66,10 @@ void Turtle::yawLeft()
     printf("Yawed Left by angle: %f \n",m_standardAngle);
 #endif
 
-    m_transformation.addRotation(0,-m_standardAngle,0);
+    //m_transformation.addRotation(-m_standardAngle,0,0);
+    //m_transformation.addRotation(0,-m_standardAngle,0);
+    //m_transformation.getMatrix().rotateZ(-m_standardAngle);
+    m_transformation.addRotation(0,0,-m_standardAngle);
 }
 
 void Turtle::yawRight()
@@ -68,7 +78,9 @@ void Turtle::yawRight()
     printf("Yawed Right by angle: %f \n",m_standardAngle);
 #endif
 
-    m_transformation.addRotation(0,m_standardAngle,0);
+   // m_transformation.addRotation(m_standardAngle,0,0);
+  //m_transformation.addRotation(0,m_standardAngle,0);
+  m_transformation.addRotation(0,0,m_standardAngle);
 }
 
 void Turtle::pitchUp()
@@ -77,7 +89,7 @@ void Turtle::pitchUp()
     printf("Pitched up by angle: %f \n",m_standardAngle);
 #endif
 
-    m_transformation.addRotation(m_standardAngle,0,0);
+    m_transformation.addRotation(0,m_standardAngle,0);
 }
 
 void Turtle::pitchDown()
@@ -86,7 +98,7 @@ void Turtle::pitchDown()
     printf("Pitched down by angle: %f \n",m_standardAngle);
 #endif
 
-    m_transformation.addRotation(-m_standardAngle,0,0);
+    m_transformation.addRotation(0,-m_standardAngle,0);
 }
 
 void Turtle::rollCW()
@@ -95,7 +107,7 @@ void Turtle::rollCW()
     printf("Rolled clockwise by angle: %f \n",m_standardAngle);
 #endif
 
-    m_transformation.addRotation(0,0,m_standardAngle);
+    m_transformation.addRotation(m_standardAngle,0,0);
 }
 void Turtle::rollCCW()
 {
@@ -103,7 +115,7 @@ void Turtle::rollCCW()
     printf("Rolled counter clockwise by angle: %f \n",m_standardAngle);
 #endif
 
-    m_transformation.addRotation(0,0,m_standardAngle);
+    m_transformation.addRotation(-m_standardAngle,0,0);
 }
 
 void Turtle::turnAround()
@@ -115,31 +127,42 @@ void Turtle::turnAround()
     m_transformation.addRotation(0,180,0);
 }
 
-void Turtle::pushOnStack()
+void Turtle::startBranch()
 {
 #ifdef _DEBUG
-    printf("Pushed on to new stack \n");
+    printf("Started new branch \n");
+    printf("Storing currentPosition = X: %f, Y: %f, Z: %f\n",m_position.m_x,m_position.m_y,m_position.m_z);
 #endif
+    storedTrans = m_transformation;
 
-     printf("Push on \n");
+    //m_storedStackPosition = m_position;
+    //m_storedStackRotation = m_rotation;
+    printf("After storing the stored position is = X: %f, Y: %f, Z: %f\n",m_storedStackPosition.m_x,m_storedStackPosition.m_y,m_storedStackPosition.m_z);
 }
 
-void Turtle::popOffStack()
+void Turtle::endBranch()
 {
 #ifdef _DEBUG
-    printf("Poped off the old stack \n");
-#endif
+    printf("ended branch \n");
+    printf("Returning position too = X: %f, Y: %f, Z: %f\n",m_storedStackPosition.m_x,m_storedStackPosition.m_y,m_storedStackPosition.m_z);
+    printf("the current position is = X: %f, Y: %f, Z: %f\n",m_position.m_x,m_position.m_y,m_position.m_z);
 
-     printf("Pop off \n");
+
+#endif
+    m_transformation = storedTrans;
+    m_position = ngl::Vec4(m_transformation.getMatrix().m_30,m_transformation.getMatrix().m_31, m_transformation.getMatrix().m_32, 1);
+    //restorePosition();
+    //restoreRotation();
+    printf("After restore the position is now = X: %f, Y: %f, Z: %f\n",m_position.m_x,m_position.m_y,m_position.m_z);
+
 }
 
 void Turtle::update()
 {
 
-    m_position = m_transformation.getPosition();
 
-#ifdef _DEBUG
-    printf("Turtle Position = X: %f, Y: %f, Z: %f\n",m_position.m_x,m_position.m_y,m_position.m_z);
-#endif
+    m_position = ngl::Vec4(m_transformation.getMatrix().m_30,m_transformation.getMatrix().m_31, m_transformation.getMatrix().m_32, 1);
+    printf("After restore the position is now = X: %f, Y: %f, Z: %f\n",m_position.m_x,m_position.m_y,m_position.m_z);
+
 
 }

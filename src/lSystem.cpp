@@ -33,8 +33,8 @@ std::map<LAlphabet , std::function<void(Turtle&)>> lSystem::AlphabetFunctions =
     {LAlphabet::RollCW,             &Turtle::rollCW},
     {LAlphabet::RollCCW,            &Turtle::rollCCW},
     {LAlphabet::TurnAround,         &Turtle::turnAround},
-    {LAlphabet::StartBranch,        &Turtle::pushOnStack},
-    {LAlphabet::EndBranch,          &Turtle::popOffStack}
+    {LAlphabet::StartBranch,        &Turtle::startBranch},
+    {LAlphabet::EndBranch,          &Turtle::endBranch}
 };
 
 
@@ -52,12 +52,16 @@ lSystem::~lSystem()
 
 void lSystem::stringInterpertator()
 {
-   // interperate axiom of user rules etc.
-    m_verts.clear();
+
+    //interperate axiom of user rules etc.
     m_generatedObject->clearAll();
     m_turtle->resetTransformation();
+    m_turtle->setStandardAngle(turtleAngle);
+    m_turtle->setStandardUnit(turtleUnit);
     int index = 0;
 
+    //NOTE: THIS LOOP IS NOT ACTUALLY UTILISING THE VERTS AND INDICES, THERE ARE DUPLICATED
+    //      AND WILL NEED TO BE CHANGED EVENTUALLY TO RETRIEVE VERTS WITH ADDRESSES.
 
     for(unsigned int i = 0; i < m_string.size(); i++)
     {
@@ -89,13 +93,8 @@ void lSystem::stringInterpertator()
         }
     }
 
-    for(int x=0; x< m_generatedObject->iSize(); x++)
-    {
-        //printf("Indicies are as follows: %i \n", m_generatedObject->getIndicie(x));
-        int g = m_generatedObject->getIndicie(x);
-        m_verts.push_back(m_generatedObject->getVertex(g));
-        //printf("X: %f, Y: %f, Z: %f \n",m_verts[x].m_x,m_verts[x].m_y,m_verts[x].m_z);
-    }
+
+
 
 
 
@@ -193,6 +192,7 @@ void lSystem::decreaseGeneration()
 
 void lSystem::increaseGeneration()
 {
+
     std::vector<lRules> m_stringSolved;
 
     for(size_t x= 0; x<m_string.length(); x++)
@@ -263,6 +263,7 @@ void lSystem::increaseGeneration()
     //printf("Final String is: %s \n", newString.c_str()); //Debug Only
     m_string = newString;
     m_generation ++;
+    printf("||||||||||||||Generation %i|||||||||||||||||| \n",m_generation);
     stringInterpertator();
 
 }

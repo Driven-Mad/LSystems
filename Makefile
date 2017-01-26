@@ -49,44 +49,44 @@ OBJECTS_DIR   = obj/
 ####### Files
 
 SOURCES       = src/main.cpp \
-		src/Image.cpp \
 		src/lSystem.cpp \
 		src/lObject.cpp \
 		src/lParser.cpp \
 		src/object.cpp \
 		src/NGLScene.cpp \
 		src/NGLSceneMouseControls.cpp \
-		src/Turtle.cpp 
+		src/Turtle.cpp \
+		src/image.cpp 
 OBJECTS       = obj/main.o \
-		obj/Image.o \
 		obj/lSystem.o \
 		obj/lObject.o \
 		obj/lParser.o \
 		obj/object.o \
 		obj/NGLScene.o \
 		obj/NGLSceneMouseControls.o \
-		obj/Turtle.o
+		obj/Turtle.o \
+		obj/image.o
 DIST          = Shaders/fragmentShader.txt \
 		Shaders/vertexShader.txt \
 		LSystemFiles/lsystem.txt \
 		LSystemFiles/rules.txt \
 		.qmake.stash \
-		Image.pro include/Image.h \
-		include/lSystem.h \
+		Image.pro include/lSystem.h \
 		include/lObject.h \
 		include/lParser.h \
 		include/object.h \
 		include/NGLScene.h \
 		include/WindowParams.h \
-		include/Turtle.h src/main.cpp \
-		src/Image.cpp \
+		include/Turtle.h \
+		include/image.h src/main.cpp \
 		src/lSystem.cpp \
 		src/lObject.cpp \
 		src/lParser.cpp \
 		src/object.cpp \
 		src/NGLScene.cpp \
 		src/NGLSceneMouseControls.cpp \
-		src/Turtle.cpp
+		src/Turtle.cpp \
+		src/image.cpp
 QMAKE_TARGET  = Image
 DESTDIR       = 
 TARGET        = Image
@@ -433,8 +433,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents include/Image.h include/lSystem.h include/lObject.h include/lParser.h include/object.h include/NGLScene.h include/WindowParams.h include/Turtle.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/main.cpp src/Image.cpp src/lSystem.cpp src/lObject.cpp src/lParser.cpp src/object.cpp src/NGLScene.cpp src/NGLSceneMouseControls.cpp src/Turtle.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/lSystem.h include/lObject.h include/lParser.h include/object.h include/NGLScene.h include/WindowParams.h include/Turtle.h include/image.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/main.cpp src/lSystem.cpp src/lObject.cpp src/lParser.cpp src/object.cpp src/NGLScene.cpp src/NGLSceneMouseControls.cpp src/Turtle.cpp src/image.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -631,9 +631,6 @@ obj/main.o: src/main.cpp /opt/Qt5.7.0/5.7/gcc_64/include/QtGui/QGuiApplication \
 		/home/i7230020/NGL/include/ngl/BBox.h \
 		/home/i7230020/NGL/include/ngl/AbstractVAO.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
-
-obj/Image.o: src/Image.cpp include/Image.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Image.o src/Image.cpp
 
 obj/lSystem.o: src/lSystem.cpp include/lSystem.h \
 		include/Turtle.h \
@@ -1548,9 +1545,11 @@ obj/Turtle.o: src/Turtle.cpp include/Turtle.h \
 		/home/i7230020/NGL/include/ngl/NGLassert.h \
 		/home/i7230020/NGL/include/ngl/Vec4.h \
 		/home/i7230020/NGL/include/ngl/Vec2.h \
-		/home/i7230020/NGL/include/ngl/Vec3.h \
-		/home/i7230020/NGL/include/ngl/NGLStream.h
+		/home/i7230020/NGL/include/ngl/Vec3.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Turtle.o src/Turtle.cpp
+
+obj/image.o: src/image.cpp include/image.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/image.o src/image.cpp
 
 ####### Install
 

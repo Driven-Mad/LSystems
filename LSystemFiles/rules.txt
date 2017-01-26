@@ -1,7 +1,7 @@
-#Rules 
-rule 0 H=H+H--H+H
-#Variables 
-angle 60.000000
+#Rules
+rule 0 F=[&F]////[&F]////&F&F&F
+#Variables
+angle 28.000000
 length 0.100000
-axiom H--H--H
+axiom &F
 generation 0

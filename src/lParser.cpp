@@ -316,8 +316,8 @@ bool lParser::writeLObjRulesOnly(const std::string &_variables_rules_filepath, l
         }
         //write variables to file
         myRulesFile <<"#Variables \n";
-        myRulesFile <<"angle " << std::to_string(lObj.m_turtle->getAngle()) << "\n";
-        myRulesFile <<"length " << std::to_string(lObj.m_turtle->getStandardUnit()) << "\n";
+        myRulesFile <<"angle " << std::to_string(lObj.getTurtleAngle()) << "\n";
+        myRulesFile <<"length " << std::to_string(lObj.getTurtleUnit()) << "\n";
         myRulesFile <<"axiom " << lObj.getAxiom() << "\n";
         myRulesFile <<"generation " << std::to_string(lObj.getGeneration()) << "\n";
         //close up both files.
@@ -357,8 +357,8 @@ bool lParser::writeLObjRulesOnly(lSystem &lObj)
         myRulesFile <<"rule " << std::to_string(i) << " " << rules[i] << "\n";
     }
     myRulesFile <<"#Variables \n";
-    myRulesFile <<"angle " << std::to_string(lObj.m_turtle->getAngle()) << "\n";
-    myRulesFile <<"length " << std::to_string(lObj.m_turtle->getStandardUnit()) << "\n";
+    myRulesFile <<"angle " << std::to_string(lObj.getTurtleAngle()) << "\n";
+    myRulesFile <<"length " << std::to_string(lObj.getTurtleUnit()) << "\n";
     myRulesFile <<"axiom " << lObj.getAxiom() << "\n";
     myRulesFile <<"generation " << std::to_string(lObj.getGeneration()) << "\n";
     //close up, return successful.
@@ -478,11 +478,11 @@ bool lParser::loadLSystem(const std::string & _lsytem_string_filepath, const std
                 }
                 if(split_string[0]== "angle")
                 {
-                    lObj.m_turtle->setStandardAngle(std::stof(split_string[1]));
+                    lObj.setTurtleAngle(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "length")
                 {
-                    lObj.m_turtle->setStandardUnit(std::stof(split_string[1]));
+                    lObj.setTurtleUnit(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "axiom")
                 {
@@ -565,11 +565,11 @@ bool lParser::loadLSystem(lSystem &lSys)
                 }
                 if(split_string[0]== "angle")
                 {
-                    lSys.m_turtle->setStandardAngle(std::stof(split_string[1]));
+                    lSys.setTurtleAngle(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "length")
                 {
-                    lSys.m_turtle->setStandardUnit(std::stof(split_string[1]));
+                    lSys.setTurtleUnit(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "axiom")
                 {

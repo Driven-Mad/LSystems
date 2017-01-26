@@ -184,28 +184,19 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     std::vector<std::string> getRules(){return m_rules;}
     //----------------------------------------------------------------------------------------------------------------------
-    /// @brief gets the amount of rules
+    /// @brief gets the generated object
     /// @return Returns the size of the array storing our rules
     //----------------------------------------------------------------------------------------------------------------------
-    int getVertsSize(){return m_verts.size();}
-    //----------------------------------------------------------------------------------------------------------------------
-    /// @brief gets our array of verts
-    /// Revision History:
-    /// This will be moved eventually to lObject which will extend from object.
-    /// to store our verts, indicies etc.
-    /// @return Returns the size of the array storing our verts
-    //----------------------------------------------------------------------------------------------------------------------
-    std::vector<ngl::Vec4> getVerts(){return m_verts;}
+    lObject getGeneratedObject() {return *m_generatedObject;}
 
 
 
+    void setTurtleUnit(float u){turtleUnit = u;}
+    void setTurtleAngle(float u){turtleAngle = u;}
 
-
+    float getTurtleUnit(){return turtleUnit;}
+    float getTurtleAngle(){return turtleAngle;}
 private:
-    //----------------------------------------------------------------------------------------------------------------------
-    /// @brief Storage container for our verticies
-    //----------------------------------------------------------------------------------------------------------------------
-    std::vector<ngl::Vec4> m_verts;
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Current generation that our lSystem is on.
     //----------------------------------------------------------------------------------------------------------------------
@@ -234,6 +225,11 @@ private:
     /// @brief Container for our rules once split (Right hand side)
     //----------------------------------------------------------------------------------------------------------------------
     std::vector<std::string> RHS_rules;
+
+    float turtleAngle;
+    float turtleUnit;
+
+
 
 
 };
