@@ -1,43 +1,106 @@
 #ifndef OBJECT_H
-#define OBJECT_H
+#define OBJECT_H  //OBJECT_H
 #include <vector>
 #include <ngl/Vec2.h>
 #include <ngl/Vec3.h>
-
+//--------------------------------------------------------------------------------------------------------------------------
+/// @file object.h
+/// @brief This is the object class to handle objects
+/// @author Lloyd Phillips
+/// @version 0.7
+/// @date 23/11/16
+/// Revision History:
+/// Currently in working progress, mainly for storing, more to be added to adjust to manipulation
+/// @class object
+/// @brief the class that allows the handling of objects.
+//--------------------------------------------------------------------------------------------------------------------------
 class object
 {
 public:
     object();
     ~object();
 
-    /// \brief sets position
-    void setPosition(ngl::Vec3 p_pos){m_position=p_pos;};
-    /// \brief sets rotation
-    void setRotation(ngl::Vec3 p_rot){m_rotation =p_rot;};
-    /// \brief gets position
-    ngl::Vec3 getPosition(){return m_position;};
-    /// \brief gets rotation
-    /// \return m_rotation
-    ngl::Vec3 getRotation(){return m_rotation;};
-
-    void addVert(ngl::Vec3 p_vert){m_verts.push_back(p_vert);};
-    void addUV(ngl::Vec2 p_UV){m_UVs.push_back(p_UV);};
-    void addNormal(ngl::Vec3 p_normal){m_normals.push_back(p_normal);};
-    void addTangent(ngl::Vec3 p_tangent){m_tangents.push_back(p_tangent);};
-    void addbiTangents(ngl::Vec3 p_biTangent){m_biTangents.push_back(p_biTangent);};
-
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief sets position
+    /// @param p_pos the position that we're passing in to set our position to. (vec3)
+    //----------------------------------------------------------------------------------------------------------------------
+    void setPosition(ngl::Vec3 const& p_pos){m_position=p_pos;}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief sets rotation
+    /// @param p_rot the rotation that we're passing in to set our rotation to. (vec3)
+    //----------------------------------------------------------------------------------------------------------------------
+    void setRotation(ngl::Vec3 const& p_rot){m_rotation =p_rot;}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief gets position
+    /// @return m_position our position.
+    //----------------------------------------------------------------------------------------------------------------------
+    const ngl::Vec3 &getPosition() const {return m_position;}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief gets rotation
+    /// @return m_position our rotation.
+    //----------------------------------------------------------------------------------------------------------------------
+    const ngl::Vec3 &getRotation()const {return m_rotation;}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief adds a vert to our vertices.
+    /// @param p_vert the vert that we want to add (vec3)
+    //----------------------------------------------------------------------------------------------------------------------
+    void addVert(ngl::Vec3 p_vert){m_verts.push_back(p_vert);}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief adds a uv to our uvs.
+    /// @param p_UV the uv that we want to add (vec2)
+    //----------------------------------------------------------------------------------------------------------------------
+    void addUV(ngl::Vec2 p_UV){m_UVs.push_back(p_UV);}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief adds a normal to our normals.
+    /// @param p_normal the normal that we want to add (vec3)
+    //----------------------------------------------------------------------------------------------------------------------
+    void addNormal(ngl::Vec3 p_normal){m_normals.push_back(p_normal);}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief adds a tangent to our tangents.
+    /// @param p_tangent the tangent that we want to add (vec3)
+    //----------------------------------------------------------------------------------------------------------------------
+    void addTangent(ngl::Vec3 p_tangent){m_tangents.push_back(p_tangent);}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief adds a biTangent to our biTangents.
+    /// @param p_biTangent the biTangent that we want to add (vec3)
+    //----------------------------------------------------------------------------------------------------------------------
+    void addbiTangents(ngl::Vec3 p_biTangent){m_biTangents.push_back(p_biTangent);}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief prints out our verticies.
+    //----------------------------------------------------------------------------------------------------------------------
     void printVerticies();
 
 
 
 private:
-    ngl::Vec3 m_position; ///< Position of model
-    ngl::Vec3 m_rotation; ///< Rotation of model
-    std::vector<ngl::Vec3> m_verts; ///< verticies produced parser
-    std::vector<ngl::Vec2> m_UVs;///< UVS produced from parser
-    std::vector<ngl::Vec3> m_normals;///< Normals produced parser
-    std::vector<ngl::Vec3> m_tangents;///< Tangents produced parser
-    std::vector<ngl::Vec3> m_biTangents;///< BiTangents produced parser
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief Position of model
+    //----------------------------------------------------------------------------------------------------------------------
+    ngl::Vec3 m_position;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief Rotation of model
+    //----------------------------------------------------------------------------------------------------------------------
+    ngl::Vec3 m_rotation;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief verticies produced parser
+    //----------------------------------------------------------------------------------------------------------------------
+    std::vector<ngl::Vec3> m_verts;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief UVs produced parser
+    //----------------------------------------------------------------------------------------------------------------------
+    std::vector<ngl::Vec2> m_UVs;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief normals produced parser
+    //----------------------------------------------------------------------------------------------------------------------
+    std::vector<ngl::Vec3> m_normals;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief tangents produced parser
+    //----------------------------------------------------------------------------------------------------------------------
+    std::vector<ngl::Vec3> m_tangents;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief bitangents produced parser
+    //----------------------------------------------------------------------------------------------------------------------
+    std::vector<ngl::Vec3> m_biTangents;
 };
 
-#endif
+#endif //!OBJECT_H
