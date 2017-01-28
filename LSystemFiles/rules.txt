@@ -1,7 +1,7 @@
 #Rules
-rule 0 F=[&F&F&F]////&F&F&F
+rule 0 F=FF+F+F+F+F+F-F
 #Variables
-angle 28.000000
+angle 90.000000
 length 0.100000
-axiom &F&F&F
+axiom F+F+F+F
 generation 0

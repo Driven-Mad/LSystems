@@ -160,6 +160,16 @@ public:
     /// @param p_rule - The rule that we want to add to our existing rules. (string)
     //----------------------------------------------------------------------------------------------------------------------
     void addRule(std::string p_rule){m_rules.push_back(p_rule);}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief Sets the turtle unit which will be passed eventually to our turtle
+    /// @param u - The unit that we want to set our turtles unit too. (float)
+    //----------------------------------------------------------------------------------------------------------------------
+    void setTurtleUnit(float u){m_turtleUnit = u;}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief Sets the turtle angle which will be passed eventually to our turtle
+    /// @param a - The angle that we want to set our turtles angle too. (float)
+    //----------------------------------------------------------------------------------------------------------------------
+    void setTurtleAngle(float a){m_turtleAngle = a;}
 //--------------------------------------------------------------------------------------------------------------------------
 /// GETTERS
 //--------------------------------------------------------------------------------------------------------------------------
@@ -188,14 +198,16 @@ public:
     /// @return Returns the size of the array storing our rules
     //----------------------------------------------------------------------------------------------------------------------
     lObject getGeneratedObject() {return *m_generatedObject;}
-
-
-
-    void setTurtleUnit(float u){turtleUnit = u;}
-    void setTurtleAngle(float u){turtleAngle = u;}
-
-    float getTurtleUnit(){return turtleUnit;}
-    float getTurtleAngle(){return turtleAngle;}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief Gets the turtle unit passed in from our parser
+    /// @return Returns the current turtles unit that has been loaded (m_turtleUnit) (float)
+    //----------------------------------------------------------------------------------------------------------------------
+    float getTurtleUnit(){return m_turtleUnit;}
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief Gets the turtle angle passed in from our parser
+    /// @return Returns the current turtles angle that has been loaded (m_turtleAngle) (float)
+    //----------------------------------------------------------------------------------------------------------------------
+    float getTurtleAngle(){return m_turtleAngle;}
 private:
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Current generation that our lSystem is on.
@@ -225,9 +237,14 @@ private:
     /// @brief Container for our rules once split (Right hand side)
     //----------------------------------------------------------------------------------------------------------------------
     std::vector<std::string> RHS_rules;
-
-    float turtleAngle;
-    float turtleUnit;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief Our turtles angle - loaded in from parser
+    //----------------------------------------------------------------------------------------------------------------------
+    float m_turtleAngle;
+    //----------------------------------------------------------------------------------------------------------------------
+    /// @brief Our turtles unit - loaded in from parser
+    //----------------------------------------------------------------------------------------------------------------------
+    float m_turtleUnit;
 
 
 

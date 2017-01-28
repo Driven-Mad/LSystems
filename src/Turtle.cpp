@@ -128,7 +128,6 @@ void Turtle::moveForwardFullStep()
 
     draw = true;
 
-    //m_position += (m_transformation.getMatrix().getForwardVector() * m_standardUnit);
     m_position += (m_transformation.getMatrix().getUpVector() * m_standardUnit);
     //m_position += (m_transformation.getMatrix().getRightVector() * m_standardUnit);
     printf("FORWARD VECTOR = X: %f, Y: %f, Z: %f\n",m_transformation.getMatrix().getForwardVector().m_x,m_transformation.getMatrix().getForwardVector().m_y,m_transformation.getMatrix().getForwardVector().m_z);
@@ -241,8 +240,8 @@ void Turtle::startBranch()
     printf("Storing currentPosition = X: %f, Y: %f, Z: %f\n",m_position.m_x,m_position.m_y,m_position.m_z);
 #endif
 
-    m_storedStackPosition = m_position;
-    m_storedStackRotation = m_rotation;
+    storePosition();
+    storeRotation();
     printf("After storing the stored position is = X: %f, Y: %f, Z: %f\n",m_storedStackPosition.m_x,m_storedStackPosition.m_y,m_storedStackPosition.m_z);
 }
 
@@ -255,8 +254,8 @@ void Turtle::endBranch()
 
 
 #endif
-     m_position = m_storedStackPosition;
-     m_rotation = m_storedStackRotation;
+     restoreRotation();
+     restorePosition();
 
 }
 

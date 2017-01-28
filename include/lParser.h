@@ -52,7 +52,7 @@ public:
     /// @param lSys - The lSystem that you want to write your loaded lsystem too. (lSystem)
     /// @return returns true if successfully loaded lSystem. (bool)
     //----------------------------------------------------------------------------------------------------------------------
-    bool loadLSystem(const std::string &_lsytem_string_filepath, const std::string &_variables_rules_filepath, lSystem &lObj);
+    bool loadLSystem(const std::string &lsytemStringFilepath, const std::string &variablesRulesFilepath, lSystem &lObj);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief loads any text file into a single string
     /// @param filepath is the filepath of the file you want to load (string)
@@ -92,7 +92,7 @@ public:
     /// @param filepath - The filepath you wish to load the object from. (string)
     /// @return returns true if successfully written object.
     //----------------------------------------------------------------------------------------------------------------------
-    bool writeObj(const std::string & filepath, object lObj);
+    bool writeObj(const std::string & filepath, object Obj);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief writes in an lsystem to file from an instance of the class lSystem.
     /// Use default files (if not there, they will be created with default L-system)
@@ -101,7 +101,7 @@ public:
     /// @return returns true if successfully written lSystem. (bool)
     //----------------------------------------------------------------------------------------------------------------------
     //Write default files in both cases.
-    bool writeLObj(lSystem &lObj);
+    bool writeLSystem(lSystem &lsys);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief writes in an lsystem *RULES ONLY* to file from an instance of the class lSystem.
     /// Use default files (if not there, they will be created with default L-system)
@@ -109,7 +109,7 @@ public:
     /// @param lSys - The lSystem that you want to write too file.(lSystem)
     /// @return returns true if successfully written lSystem. (bool)
     //----------------------------------------------------------------------------------------------------------------------
-    bool writeLObjRulesOnly(lSystem &lObj);
+    bool writeLSystemRulesOnly(lSystem &lsys);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief writes in an lsystem *RULES ONLY* to file from an instance of the class lSystem
     /// to your own file.
@@ -117,7 +117,7 @@ public:
     /// @param lSys - The lSystem that you want to write too file.(lSystem)
     /// @return returns true if successfully written lSystem. (bool)
     //----------------------------------------------------------------------------------------------------------------------
-    bool writeLObjRulesOnly(const std::string & _variables_rules_filepath, lSystem &lObj);
+    bool writeLSystemRulesOnly(const std::string & variablesRulesFilepath, lSystem &lSys);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief writes in an lsystem *SYSTEM ONLY* to file from an instance of the class lSystem.
     /// Use default files (if not there, they will be created with default L-system)
@@ -125,7 +125,7 @@ public:
     /// @param lSys - The lSystem that you want to write too file. (lSystem)
     /// @return returns true if successfully written lSystem. (bool)
     //----------------------------------------------------------------------------------------------------------------------
-    bool writeLObjSystemOnly(lSystem &lObj);
+    bool writeLSystemSystemOnly(lSystem &lObj);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief writes in an lsystem *SYSTEM ONLY* to file from an instance of the class lSystem.
     /// Use default files (if not there, they will be created with default L-system)
@@ -134,7 +134,7 @@ public:
     /// @param lSys - The lSystem that you want to write too file.(lSystem)
     /// @return returns true if successfully written lSystem. (bool)
     //----------------------------------------------------------------------------------------------------------------------
-    bool writeLObjSystemOnly(const std::string & _lsytem_string_filepath, lSystem &lObj);
+    bool writeLSystemSystemOnly(const std::string & lsytemStringFilepath, lSystem &lsys);
 
 
 

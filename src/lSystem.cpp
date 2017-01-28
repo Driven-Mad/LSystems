@@ -56,7 +56,7 @@ void lSystem::stringInterpertator()
     //interperate axiom of user rules etc.
     m_generatedObject->clearAll();
     m_turtle->resetTransformation();
-    m_turtle->init(turtleAngle,turtleUnit);
+    m_turtle->init(m_turtleAngle,m_turtleUnit);
     int index = 0;
 
     //NOTE: THIS LOOP IS NOT ACTUALLY UTILISING THE VERTS AND INDICES, THERE ARE DUPLICATED

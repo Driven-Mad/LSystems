@@ -11,7 +11,7 @@ lParser::~lParser()
 
 }
 
-bool lParser::writeObj(const std::string & filepath, object lObj)
+bool lParser::writeObj(const std::string & filepath, object Obj)
 {
     //Object writer (ref old code - re-write for c++ 11
     bool success = false;
@@ -293,21 +293,20 @@ bool lParser::loadObj(const std::string & filepath, object &obj)
 }
 
 
-bool lParser::writeLObjRulesOnly(const std::string &_variables_rules_filepath, lSystem &lObj)
+bool lParser::writeLSystemRulesOnly(const std::string &variablesRulesFilepath, lSystem &lSys)
 {
     bool success = false;
-    std::string line;
 
     //check if we can open the file.
-    std::ifstream iMyRulesFile(_variables_rules_filepath);
+    std::ifstream iMyRulesFile(variablesRulesFilepath);
     if(iMyRulesFile.is_open())
     {
         //if it is opened then open it as a writable file
-        std::ofstream myRulesFile(_variables_rules_filepath);
+        std::ofstream myRulesFile(variablesRulesFilepath);
         //If ifstream can open, file exists, write to it.
-        printf("%s File has been opened \n",_variables_rules_filepath.c_str());
+        printf("%s File has been opened \n",variablesRulesFilepath.c_str());
         //create a temporary array for a rules.
-        std::vector<std::string> rules = lObj.getRules();
+        std::vector<std::string> rules = lSys.getRules();
         //write rules to file
         myRulesFile <<"#Rules \n";
         for(size_t i = 0; i < rules.size(); i++)
@@ -316,10 +315,10 @@ bool lParser::writeLObjRulesOnly(const std::string &_variables_rules_filepath, l
         }
         //write variables to file
         myRulesFile <<"#Variables \n";
-        myRulesFile <<"angle " << std::to_string(lObj.getTurtleAngle()) << "\n";
-        myRulesFile <<"length " << std::to_string(lObj.getTurtleUnit()) << "\n";
-        myRulesFile <<"axiom " << lObj.getAxiom() << "\n";
-        myRulesFile <<"generation " << std::to_string(lObj.getGeneration()) << "\n";
+        myRulesFile <<"angle " << std::to_string(lSys.getTurtleAngle()) << "\n";
+        myRulesFile <<"length " << std::to_string(lSys.getTurtleUnit()) << "\n";
+        myRulesFile <<"axiom " << lSys.getAxiom() << "\n";
+        myRulesFile <<"generation " << std::to_string(lSys.getGeneration()) << "\n";
         //close up both files.
         myRulesFile.close();
         iMyRulesFile.close();
@@ -327,14 +326,14 @@ bool lParser::writeLObjRulesOnly(const std::string &_variables_rules_filepath, l
     }else
     {
         //Else the file doesn't exist, close it up and return false
-        printf("%s does not exist \n",_variables_rules_filepath.c_str());
+        printf("%s does not exist \n",variablesRulesFilepath.c_str());
         iMyRulesFile.close();
         success = false;
     }
     return success;
 }
 
-bool lParser::writeLObjRulesOnly(lSystem &lObj)
+bool lParser::writeLSystemRulesOnly(lSystem &lSys)
 {
     const std::string _variables_rules_filepath = "LSystemFiles/rules.txt";
 
@@ -350,24 +349,24 @@ bool lParser::writeLObjRulesOnly(lSystem &lObj)
     //If ifstream can open, file exists, write to it.
     printf("%s File has been opened \n",_variables_rules_filepath.c_str());
     //write our rules and variables to the file
-    std::vector<std::string> rules = lObj.getRules();
+    std::vector<std::string> rules = lSys.getRules();
     myRulesFile <<"#Rules \n";
     for(size_t i = 0; i < rules.size(); i++)
     {
         myRulesFile <<"rule " << std::to_string(i) << " " << rules[i] << "\n";
     }
     myRulesFile <<"#Variables \n";
-    myRulesFile <<"angle " << std::to_string(lObj.getTurtleAngle()) << "\n";
-    myRulesFile <<"length " << std::to_string(lObj.getTurtleUnit()) << "\n";
-    myRulesFile <<"axiom " << lObj.getAxiom() << "\n";
-    myRulesFile <<"generation " << std::to_string(lObj.getGeneration()) << "\n";
+    myRulesFile <<"angle " << std::to_string(lSys.getTurtleAngle()) << "\n";
+    myRulesFile <<"length " << std::to_string(lSys.getTurtleUnit()) << "\n";
+    myRulesFile <<"axiom " << lSys.getAxiom() << "\n";
+    myRulesFile <<"generation " << std::to_string(lSys.getGeneration()) << "\n";
     //close up, return successful.
     myRulesFile.close();
 
     return true;
 }
 
-bool lParser::writeLObjSystemOnly(lSystem &lObj)
+bool lParser::writeLSystemSystemOnly(lSystem &lSys)
 {
     std::string _lsytem_string_filepath = "LSystemFiles/lsystem.txt"; //default file name will be "lsystem.txt
 
@@ -382,24 +381,23 @@ bool lParser::writeLObjSystemOnly(lSystem &lObj)
     //Write our variables to the file.
     std::ofstream myRulesFile(_lsytem_string_filepath);
     printf("%s File has been opened \n",_lsytem_string_filepath.c_str());
-    myRulesFile << lObj.getLSystem();
+    myRulesFile << lSys.getLSystem();
     myRulesFile.close();
 
     return true;
 }
 
-bool lParser::writeLObjSystemOnly(const std::string &_lsytem_string_filepath, lSystem &lObj)
+bool lParser::writeLSystemSystemOnly(const std::string &lsytemStringFilepath, lSystem &lSys)
 {
     bool success = false;
-    std::string line;
-    std::ifstream iMyRulesFile(_lsytem_string_filepath);
+    std::ifstream iMyRulesFile(lsytemStringFilepath);
     //check if file exists as it's user defined
     if(iMyRulesFile.is_open())
     {
-        std::ofstream myRulesFile(_lsytem_string_filepath);
+        std::ofstream myRulesFile(lsytemStringFilepath);
         //If if stream can open, file exists, write to it.
-        printf("%s File has been opened \n",_lsytem_string_filepath.c_str());
-        myRulesFile << lObj.getLSystem();
+        printf("%s File has been opened \n",lsytemStringFilepath.c_str());
+        myRulesFile << lSys.getLSystem();
 
         //close up files
         myRulesFile.close();
@@ -407,7 +405,7 @@ bool lParser::writeLObjSystemOnly(const std::string &_lsytem_string_filepath, lS
         success = true;
     }else
     {
-        printf("%s does not exist \n",_lsytem_string_filepath.c_str());
+        printf("%s does not exist \n",lsytemStringFilepath.c_str());
         //close up file, and return false.
         iMyRulesFile.close();
         success = false;
@@ -415,27 +413,27 @@ bool lParser::writeLObjSystemOnly(const std::string &_lsytem_string_filepath, lS
     return success;
 }
 
-bool lParser::writeLObj(lSystem &lObj)
+bool lParser::writeLSystem(lSystem &lsys)
 {
-    bool success = writeLObjSystemOnly(lObj);
+    bool success = writeLSystemSystemOnly(lsys);
     if(success)
     {
-        success =writeLObjRulesOnly(lObj);
+        success =writeLSystemRulesOnly(lsys);
     }
     return success;
 }
 
-bool lParser::loadLSystem(const std::string & _lsytem_string_filepath, const std::string &_variables_rules_filepath, lSystem &lObj)
+bool lParser::loadLSystem(const std::string & lsytemStringFilepath, const std::string &variablesRulesFilepath, lSystem &lObj)
 {
     bool success = false;
     std::string line;
-    std::ifstream myLsystemFile(_lsytem_string_filepath);
-    std::ifstream myVariablesRulesFile(_variables_rules_filepath);
+    std::ifstream myLsystemFile(lsytemStringFilepath);
+    std::ifstream myVariablesRulesFile(variablesRulesFilepath);
 
 
     if(myLsystemFile.is_open())
     {
-        printf("%s File has been opened \n",_lsytem_string_filepath.c_str());
+        printf("%s File has been opened \n",lsytemStringFilepath.c_str());
         while(std::getline(myLsystemFile, line))//get everyline of the lsystem
         {
             lObj.setLSystem(lObj.getLSystem().append(line)); //add every line to our system
@@ -445,14 +443,14 @@ bool lParser::loadLSystem(const std::string & _lsytem_string_filepath, const std
         success = true;
     }else
     {
-        printf("Couldn't open %s File \n",_lsytem_string_filepath.c_str());
+        printf("Couldn't open %s File \n",lsytemStringFilepath.c_str());
         myLsystemFile.close();
         success = false;
     }
 
     if(myVariablesRulesFile.is_open())
     {
-        printf("%s File has been opened \n",_variables_rules_filepath.c_str());
+        printf("%s File has been opened \n",variablesRulesFilepath.c_str());
         while(std::getline(myVariablesRulesFile, line))//get everyline of the lsystem
         {
             std::vector<std::string> split_string; //Storage for our line to be split into
@@ -502,7 +500,7 @@ bool lParser::loadLSystem(const std::string & _lsytem_string_filepath, const std
     else
     {
         //failed to read in the file,
-        printf("Couldn't open %s File \n",_variables_rules_filepath.c_str());
+        printf("Couldn't open %s File \n",variablesRulesFilepath.c_str());
         myVariablesRulesFile.close();
         success = false;
     }
@@ -534,7 +532,7 @@ bool lParser::loadLSystem(lSystem &lSys)
     }else
     {
         myLsystemFile.close();
-        success = writeLObjSystemOnly(lSys);
+        success = writeLSystemSystemOnly(lSys);
     }
 
     if(myVariablesRulesFile.is_open())
@@ -590,7 +588,7 @@ bool lParser::loadLSystem(lSystem &lSys)
     {
 
         myVariablesRulesFile.close();
-        success = writeLObjRulesOnly(lSys);
+        success = writeLSystemRulesOnly(lSys);
     }
 
 
