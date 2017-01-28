@@ -115,11 +115,11 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Stores the current position of the turtle into a seperate variable
     //----------------------------------------------------------------------------------------------------------------------
-    void storePosition(){m_storedStackPosition = m_transformation.getPosition();}
+    void storePosition(){m_storedStackPosition = m_position;}
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Stores the current rotation of the turtle into a seperate variable
     //----------------------------------------------------------------------------------------------------------------------
-    void storeRotation(){m_storedStackRotation = m_transformation.getRotation();}
+    void storeRotation(){m_storedStackRotation = m_rotation;}
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Sets the standard unit and half unit.
     /// @param p_sUnit - The standard unit you wish to set turtles standard unit
@@ -148,11 +148,11 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief restores position before poping off.
     //----------------------------------------------------------------------------------------------------------------------
-    void restorePosition() {m_transformation.setPosition(m_storedStackPosition); m_position = m_storedStackPosition;}
+    void restorePosition() {m_position = m_storedStackPosition;}
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief restores rotation before poping off.
     //----------------------------------------------------------------------------------------------------------------------
-    void restoreRotation() {m_transformation.setRotation( m_storedStackRotation);m_rotation = m_storedStackRotation;}
+    void restoreRotation() {m_rotation = m_storedStackRotation;}
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Gets the standard unit of this turtle.
     /// @return Returns the current standard unit (m_standardUnit) of the turtle. (float)
@@ -173,6 +173,7 @@ public:
     /// @return Returns the drawing flag (draw) of the turtle. Drawing ? True : False (bool)
     //----------------------------------------------------------------------------------------------------------------------
 
+    bool active = true;
 private:
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief Turtle transformation;
@@ -212,9 +213,9 @@ private:
     bool draw = false;
 
     //UNUSED
-    ngl::Mat3 rotationX;
-    ngl::Mat3 rotationY;
-    ngl::Mat3 rotationZ;
+   // ngl::Mat3 rotationX;
+   // ngl::Mat3 rotationY;
+   // ngl::Mat3 rotationZ;
 
 
 };

@@ -40,7 +40,7 @@ std::map<LAlphabet , std::function<void(Turtle&)>> lSystem::AlphabetFunctions =
 
 lSystem::lSystem()
 {
-    m_turtle = new Turtle();
+
     m_generatedObject = new lObject();
     m_generation = 0;
 }
@@ -49,54 +49,132 @@ lSystem::~lSystem()
 {
 
 }
-
-void lSystem::stringInterpertator()
+void lSystem::stringInterpertator(std::string stringToBeInter,Turtle passedIntTurtle)
 {
 
+    printf("I'M HITTIIIIIIINNGGGGGGGGGGGGGGGGGGGGGGGGGGGGG \n");
     //interperate axiom of user rules etc.
-    m_generatedObject->clearAll();
-    m_turtle->resetTransformation();
-    m_turtle->init(m_turtleAngle,m_turtleUnit);
-    int index = 0;
+    Turtle *T = new Turtle();
+    //m_generatedObject->clearAll();
+    T->resetTransformation();
+    T->init(m_turtleAngle,m_turtleUnit);
+    T->setPosition(passedIntTurtle.getPosition());
+    T->setRotation(passedIntTurtle.getRotation());
 
     //NOTE: THIS LOOP IS NOT ACTUALLY UTILISING THE VERTS AND INDICES, THERE ARE DUPLICATED
     //      AND WILL NEED TO BE CHANGED EVENTUALLY TO RETRIEVE VERTS WITH ADDRESSES.
 
-    for(unsigned int i = 0; i < m_string.size(); i++)
-    {
-        if(m_string[i] == 'F' || m_string[i] == 'H' )
+
+    if(T->active){
+        for(unsigned int i = 0; i < stringToBeInter.size(); i++)
         {
-            //Add the current position
-            m_generatedObject->addVert(m_turtle->getPosition());
-            // add that index
-            m_generatedObject->addIndicies(index);
-            //Increase the index
-            index++;
+           //if(stringToBeInter[i] == '[')
+           //{
+           //    size_t startOfBranch = i+1;
+           //    printf("SOB = %i \n", startOfBranch);
+           //    size_t endOfBranch = stringToBeInter.find(']',startOfBranch);
+           //    printf("EOB = %i \n", endOfBranch);
+           //    size_t length = (endOfBranch - startOfBranch) ;
+           //    printf("L = %i \n", length);
+           //    std::string myBranch =  stringToBeInter.substr(startOfBranch, length);
+           //    printf("myBranch = %s \n", myBranch.c_str());
+           //    stringInterpertator(myBranch,*T);
+           //    i+= length;
+           //    break;
+           //
+           //
+           //}
+            if(stringToBeInter[i] == 'F' || stringToBeInter[i] == 'H' )
+            {
+                //Add the current position
+                m_generatedObject->addVert(T->getPosition());
+                // add that index
+                m_generatedObject->addIndicies(index);
+                //Increase the index
+                index++;
 
-        }
-        //Call appropriate function based on string
-        AlphabetFunctions[AlphabetsStrings[m_string[i]]](*m_turtle);
-        //update the turtle
-        m_turtle->update();
+            }
+            //Call appropriate function based on string
+            AlphabetFunctions[AlphabetsStrings[stringToBeInter[i]]](*T);
+            //update the turtle
+            T->update();
 
-        //IF the string variable we are reading in is a FULL DRAWN step
-        if(m_string[i] == 'F' || m_string[i] == 'H')
-        {
-            //Add the current position
-            m_generatedObject->addVert(m_turtle->getPosition());
-            // add that index
-            m_generatedObject->addIndicies(index);
-            //Increase the index
-            index++;
+            //IF the string variable we are reading in is a FULL DRAWN step
+            if(stringToBeInter[i] == 'F' || stringToBeInter[i] == 'H')
+            {
+                //Add the current position
+                m_generatedObject->addVert(T->getPosition());
+                // add that index
+                m_generatedObject->addIndicies(index);
+                //Increase the index
+                index++;
 
+            }
         }
     }
 
+}
+void lSystem::stringInterpertator(std::string stringToBeInter)
+{
+
+    //interperate axiom of user rules etc.
+    Turtle *T = new Turtle();
+    m_generatedObject->clearAll();
+    T->resetTransformation();
+    T->init(m_turtleAngle,m_turtleUnit);
+    index = 0;
+
+    //NOTE: THIS LOOP IS NOT ACTUALLY UTILISING THE VERTS AND INDICES, THERE ARE DUPLICATED
+    //      AND WILL NEED TO BE CHANGED EVENTUALLY TO RETRIEVE VERTS WITH ADDRESSES.
 
 
+    if(T->active){
+        for(unsigned int i = 0; i < stringToBeInter.size(); i++)
+        {
+            //SO CLOSE
+            //if(stringToBeInter[i] == '[')
+            //{
+            //    size_t startOfBranch = i+1;
+            //    printf("SOB = %i \n", startOfBranch);
+            //    size_t endOfBranch = stringToBeInter.find(']',startOfBranch);
+            //    printf("EOB = %i \n", endOfBranch);
+            //    size_t length = (endOfBranch - startOfBranch) ;
+            //    printf("L = %i \n", length);
+            //    std::string myBranch =  stringToBeInter.substr(startOfBranch, length);
+            //    printf("myBranch = %s \n", myBranch.c_str());
+            //    stringInterpertator(myBranch,*T);
+            //    i+= length;
+            //
+            //
+            //}
+            if(stringToBeInter[i] == 'F' || stringToBeInter[i] == 'H' )
+            {
+                //Add the current position
+                m_generatedObject->addVert(T->getPosition());
+                // add that index
+                m_generatedObject->addIndicies(index);
+                //Increase the index
+                index++;
 
+            }
+            //Call appropriate function based on string
+            AlphabetFunctions[AlphabetsStrings[stringToBeInter[i]]](*T);
+            //update the turtle
+            T->update();
 
+            //IF the string variable we are reading in is a FULL DRAWN step
+            if(stringToBeInter[i] == 'F' || stringToBeInter[i] == 'H')
+            {
+                //Add the current position
+                m_generatedObject->addVert(T->getPosition());
+                // add that index
+                m_generatedObject->addIndicies(index);
+                //Increase the index
+                index++;
 
+            }
+        }
+    }
 
 }
 
@@ -110,10 +188,10 @@ void lSystem::printLSystem()
 
 void lSystem::printVariables()
 {
-    printf("Angle is as follows: \n%f\n",m_turtle->getAngle() );
-    printf("Length is as follows: \n%f\n",m_turtle->getStandardUnit() );
+    printf("Angle is as follows: \n%f\n",m_turtleAngle );
+    printf("Length is as follows: \n%f\n",m_turtleUnit );
     printf("Axiom is as follows: \n%s\n", m_axiom.c_str());
-     printf("||||||||||||||Generation %i|||||||||||||||||| \n",m_generation);
+    printf("||||||||||||||Generation %i|||||||||||||||||| \n",m_generation);
 
 }
 
@@ -184,7 +262,7 @@ void lSystem::decreaseGeneration()
            --rule;
        }
        m_generation --;
-       stringInterpertator();
+       stringInterpertator(m_string);
    }
 
 
@@ -264,6 +342,19 @@ void lSystem::increaseGeneration()
     m_string = newString;
     m_generation ++;
     printf("||||||||||||||Generation %i|||||||||||||||||| \n",m_generation);
-    stringInterpertator();
+    stringInterpertator(m_string);
+
+}
+
+
+void lSystem::Reset()
+{
+    m_generatedObject->clearAll();
+    m_rules.clear();
+    m_generation = 0;
+    m_turtleAngle = 0;
+    m_turtleUnit = 0;
+    m_axiom = "";
+    m_string = "";
 
 }

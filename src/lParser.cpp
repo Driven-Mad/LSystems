@@ -423,34 +423,35 @@ bool lParser::writeLSystem(lSystem &lsys)
     return success;
 }
 
-bool lParser::loadLSystem(const std::string & lsytemStringFilepath, const std::string &variablesRulesFilepath, lSystem &lObj)
+bool lParser::loadLSystem(const std::string & lsytemStringFilepath, const std::string &variablesRulesFilepath, lSystem &lSys)
 {
     bool success = false;
+    std::string _lsytem_string_filepath = lsytemStringFilepath;
+    std::string _variables_rules_filepath = variablesRulesFilepath;
     std::string line;
-    std::ifstream myLsystemFile(lsytemStringFilepath);
-    std::ifstream myVariablesRulesFile(variablesRulesFilepath);
+    std::ifstream myLsystemFile(_lsytem_string_filepath);
+    std::ifstream myVariablesRulesFile(_variables_rules_filepath);
 
 
     if(myLsystemFile.is_open())
     {
-        printf("%s File has been opened \n",lsytemStringFilepath.c_str());
+        printf("%s File has been opened \n",_lsytem_string_filepath.c_str());
         while(std::getline(myLsystemFile, line))//get everyline of the lsystem
         {
-            lObj.setLSystem(lObj.getLSystem().append(line)); //add every line to our system
+            lSys.setLSystem(lSys.getLSystem().append(line)); //add every line to our system
             //need to check if everything is apart of our alphabet.
         }
         myLsystemFile.close();
         success = true;
     }else
     {
-        printf("Couldn't open %s File \n",lsytemStringFilepath.c_str());
         myLsystemFile.close();
-        success = false;
+        success = writeLSystemSystemOnly(lSys);
     }
 
     if(myVariablesRulesFile.is_open())
     {
-        printf("%s File has been opened \n",variablesRulesFilepath.c_str());
+        printf("%s File has been opened \n",_variables_rules_filepath.c_str());
         while(std::getline(myVariablesRulesFile, line))//get everyline of the lsystem
         {
             std::vector<std::string> split_string; //Storage for our line to be split into
@@ -472,23 +473,23 @@ bool lParser::loadLSystem(const std::string & lsytemStringFilepath, const std::s
                     {
                         r.append(split_string[x]);
                     }
-                    lObj.addRule(r);
+                    lSys.addRule(r);
                 }
                 if(split_string[0]== "angle")
                 {
-                    lObj.setTurtleAngle(std::stof(split_string[1]));
+                    lSys.setTurtleAngle(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "length")
                 {
-                    lObj.setTurtleUnit(std::stof(split_string[1]));
+                    lSys.setTurtleUnit(std::stof(split_string[1]));
                 }
                 if(split_string[0]== "axiom")
                 {
-                    lObj.setAxiom(split_string[1]);
+                    lSys.setAxiom(split_string[1]);
                 }
                 if(split_string[0]== "generation")
                 {
-                    lObj.setGeneration(std::stoi(split_string[1]));
+                    lSys.setGeneration(std::stoi(split_string[1]));
                 }
                 success = true;
             }
@@ -499,11 +500,12 @@ bool lParser::loadLSystem(const std::string & lsytemStringFilepath, const std::s
     }
     else
     {
-        //failed to read in the file,
-        printf("Couldn't open %s File \n",variablesRulesFilepath.c_str());
+
         myVariablesRulesFile.close();
-        success = false;
+        success = writeLSystemRulesOnly(lSys);
     }
+
+
     return success;
 
 }

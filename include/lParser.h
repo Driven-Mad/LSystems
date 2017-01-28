@@ -52,7 +52,7 @@ public:
     /// @param lSys - The lSystem that you want to write your loaded lsystem too. (lSystem)
     /// @return returns true if successfully loaded lSystem. (bool)
     //----------------------------------------------------------------------------------------------------------------------
-    bool loadLSystem(const std::string &lsytemStringFilepath, const std::string &variablesRulesFilepath, lSystem &lObj);
+    bool loadLSystem(const std::string &lsytemStringFilepath, const std::string &variablesRulesFilepath, lSystem &lsys);
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief loads any text file into a single string
     /// @param filepath is the filepath of the file you want to load (string)
