@@ -56,8 +56,7 @@ void lSystem::stringInterpertator()
     //interperate axiom of user rules etc.
     m_generatedObject->clearAll();
     m_turtle->resetTransformation();
-    m_turtle->setStandardAngle(turtleAngle);
-    m_turtle->setStandardUnit(turtleUnit);
+    m_turtle->init(turtleAngle,turtleUnit);
     int index = 0;
 
     //NOTE: THIS LOOP IS NOT ACTUALLY UTILISING THE VERTS AND INDICES, THERE ARE DUPLICATED
@@ -114,6 +113,7 @@ void lSystem::printVariables()
     printf("Angle is as follows: \n%f\n",m_turtle->getAngle() );
     printf("Length is as follows: \n%f\n",m_turtle->getStandardUnit() );
     printf("Axiom is as follows: \n%s\n", m_axiom.c_str());
+     printf("||||||||||||||Generation %i|||||||||||||||||| \n",m_generation);
 
 }
 

@@ -2,6 +2,7 @@
 #define TURTLE_H // TURTLE_H
 #include <iostream>
 #include <ngl/Transformation.h>
+#include <ngl/Mat3.h>
 //--------------------------------------------------------------------------------------------------------------------------
 /// @file turtle.h
 /// @brief This is the turtle class to manipulate a "turtle" to create geometric shapes.
@@ -95,6 +96,8 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     void resetTransformation(){m_transformation.reset();}
 
+    void init();
+    void init(float angle, float length);
 
 //--------------------------------------------------------------------------------------------------------------------------
 /// SETTERS
@@ -216,6 +219,12 @@ private:
     bool draw = false;
 
     ngl::Transformation storedTrans;
+    ngl::Vec4 forwardVector;
+
+    ngl::Mat3 rotationX;
+    ngl::Mat3 rotationY;
+    ngl::Mat3 rotationZ;
+
 
 };
 
