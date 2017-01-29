@@ -1,0 +1,7 @@
+#Rules
+rule 0 F=FF+F+F+F+FF
+#Variables
+angle 90.0000
+length 0.1000
+axiom F+F+F+F
+generation 0
